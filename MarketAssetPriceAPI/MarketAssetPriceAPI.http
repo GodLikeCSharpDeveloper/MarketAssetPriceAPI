@@ -1,0 +1,6 @@
+@MarketAssetPriceAPI_HostAddress = http://localhost:5286
+
+GET {{MarketAssetPriceAPI_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
