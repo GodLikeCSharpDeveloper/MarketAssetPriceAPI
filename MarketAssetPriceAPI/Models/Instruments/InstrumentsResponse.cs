@@ -1,6 +1,6 @@
 ﻿using System.Net.NetworkInformation;
 
-namespace MarketAssetPriceAPI.Models
+namespace MarketAssetPriceAPI.Models.Instruments
 {
     public class InstrumentsResponse
     {

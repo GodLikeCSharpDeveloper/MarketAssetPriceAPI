@@ -13,6 +13,7 @@ builder.Services.AddHttpClient();
 builder.Services.Configure<FintachartCredentials>(builder.Configuration.GetSection("FintachartCredentials"));
 builder.Services.AddSingleton<TokenResponseStore>();
 builder.Services.AddScoped<FintachartsService>();
+builder.Services.AddScoped<BarsService>();
 builder.Services.AddScoped<TokenHelper>();
 builder.Services.AddScoped<TokenService>();
 builder.Services.AddEndpointsApiExplorer();

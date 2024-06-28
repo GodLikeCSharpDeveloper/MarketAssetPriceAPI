@@ -1,6 +1,6 @@
 ﻿using Newtonsoft.Json;
 
-namespace MarketAssetPriceAPI.Models
+namespace MarketAssetPriceAPI.Models.Instruments
 {
     public class Instrument
     {
