@@ -1,4 +1,4 @@
-﻿using MarketAssetPriceAPI.Models.Bars;
+﻿using MarketAssetPriceAPI.Models.Bars.QueryParameters;
 using MarketAssetPriceAPI.Models.Instruments;
 using MarketAssetPriceAPI.Services;
 using Microsoft.AspNetCore.Mvc;
@@ -17,7 +17,13 @@ namespace MarketAssetPriceAPI.Controllers
         [HttpGet("date-range")]
         public async Task<IActionResult> GetBarsDateRange([FromQuery] BarsDateRangeQueryParameters parameters)
         {
-            var data = await barsService.GetBarsCountBackAsync(parameters);
+            var data = await barsService.GetBarsDateRangeAsync(parameters);
+            return Ok(data);
+        }
+        [HttpGet("time-back")]
+        public async Task<IActionResult> GetBarsDateRange([FromQuery] BarsTimeBackQueryParameters parameters)
+        {
+            var data = await barsService.GetBarsTimeBackAsync(parameters);
             return Ok(data);
         }
     }

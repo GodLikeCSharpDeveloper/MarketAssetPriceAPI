@@ -1,4 +1,4 @@
-﻿namespace MarketAssetPriceAPI.Models.Bars
+﻿namespace MarketAssetPriceAPI.Models.Bars.QueryParameters
 {
     public class BaseBarsQueryParameters
     {
