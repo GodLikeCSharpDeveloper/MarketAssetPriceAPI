@@ -1,4 +1,5 @@
-﻿using MarketAssetPriceAPI.Services;
+﻿using MarketAssetPriceAPI.Models;
+using MarketAssetPriceAPI.Services;
 using Microsoft.AspNetCore.Mvc;
 
 namespace MarketAssetPriceAPI.Controllers
@@ -17,13 +18,13 @@ namespace MarketAssetPriceAPI.Controllers
         [HttpGet("price-info")]
         public async Task<IActionResult> GetPriceInfo([FromQuery] string asset)
         {
-            var data = await _fintachartsService.GetHistoricalPricesAsync(asset);
+            var data = await _fintachartsService.GetExchangeDataAsync();
             return Ok(data);
         }
         [HttpGet("list-instruments")]
         public async Task<IActionResult> GetAllInstruments([FromQuery] string provider, [FromQuery] string kind)
         {
-            var data = await _fintachartsService.GetHistoricalPricesAsync(provider);
+            var data = await _fintachartsService.GetInstrumentsAsync(provider, kind);
             return Ok(data);
         }
     }
