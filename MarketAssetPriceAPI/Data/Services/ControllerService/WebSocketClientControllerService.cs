@@ -1,4 +1,5 @@
-﻿using System;
+﻿using MarketAssetPriceAPI.Data.Services.ControllerService;
+using System;
 using System.Net.WebSockets;
 using System.Text;
 using System.Text.Json;
@@ -7,14 +8,14 @@ using System.Threading.Tasks;
 
 namespace MarketAssetPriceAPI.Data.Services
 {
-    public class WebSocketClientControllerService : AuthorizedControllerService
+    public class WebSocketClientControllerService : AuthorizedControllerService, IWebSocketClientControllerService
     {
         private readonly ClientWebSocket _clientWebSocket;
         private Uri _webSocketUri;
-        private readonly TokenControllerService tokenService;
+        private readonly ITokenControllerService tokenService;
         private readonly CancellationTokenSource _cancellationTokenSource;
         private readonly CancellationToken _cancellationToken;
-        public WebSocketClientControllerService(TokenControllerService tokenService) : base(tokenService)
+        public WebSocketClientControllerService(ITokenControllerService tokenService) : base(tokenService)
         {
             _clientWebSocket = new ClientWebSocket();
             this.tokenService = tokenService;
@@ -22,16 +23,16 @@ namespace MarketAssetPriceAPI.Data.Services
             _cancellationToken = _cancellationTokenSource.Token;
         }
 
-        public async Task StartAsync()
+        public async Task Start()
         {
-            var token = tokenService.GetAccessTokenAsync().Result;
+            var token = tokenService.GetAccessToken().Result;
             _webSocketUri = new Uri($"wss://platform.fintacharts.com/api/streaming/ws/v1/realtime?token={token}");
             await _clientWebSocket.ConnectAsync(_webSocketUri, CancellationToken.None);
             Console.WriteLine("WebSocket connection started.");
-            _ = Task.Run(ReceiveDataAsync);
+            _ = Task.Run(ReceiveData);
         }
 
-        public async Task SendSubscriptionAsync()
+        public async Task SendSubscription()
         {
             var subscription = new
             {
@@ -50,7 +51,7 @@ namespace MarketAssetPriceAPI.Data.Services
             Console.WriteLine("Subscription message sent.");
         }
 
-        private async Task ReceiveDataAsync()
+        private async Task ReceiveData()
         {
             var buffer = new byte[1024 * 4];
 
@@ -72,17 +73,12 @@ namespace MarketAssetPriceAPI.Data.Services
             }
         }
 
-        public async Task StopAsync()
+        public async Task Stop()
         {
             _cancellationTokenSource.Cancel();
             await _clientWebSocket.CloseAsync(WebSocketCloseStatus.NormalClosure, "Stopping connection", CancellationToken.None);
             Console.WriteLine("WebSocket connection stopped.");
             _clientWebSocket.Dispose();
-        }
-        public void Dispose()
-        {
-            _cancellationTokenSource.Cancel();
-            _clientWebSocket?.Dispose();
         }
     }
 }

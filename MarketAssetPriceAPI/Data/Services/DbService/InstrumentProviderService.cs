@@ -3,9 +3,9 @@ using MarketAssetPriceAPI.Data.Repository;
 
 namespace MarketAssetPriceAPI.Data.Services.DbService
 {
-    public class InstrumentProviderService(InstrumentProviderRepository instrumentProviderRepository)
+    public class InstrumentProviderService(IInstrumentProviderRepository instrumentProviderRepository) : IInstrumentProviderService
     {
-        private readonly InstrumentProviderRepository instrumentProviderRepository = instrumentProviderRepository;
+        private readonly IInstrumentProviderRepository instrumentProviderRepository = instrumentProviderRepository;
         public async Task AddNewInstrumentProvider(InstrumentProviderRelationEntity instrumentProvider)
         {
             if (instrumentProvider == null || instrumentProvider.ProviderId == 0 || instrumentProvider.InstrumentId == 0)

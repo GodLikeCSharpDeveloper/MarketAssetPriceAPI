@@ -11,8 +11,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace MarketAssetPriceAPI.Migrations
 {
     [DbContext(typeof(MarketDbContext))]
-    [Migration("20240629143531_second")]
-    partial class second
+    [Migration("20240629162756_third")]
+    partial class third
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -63,17 +63,12 @@ namespace MarketAssetPriceAPI.Migrations
                     b.Property<int>("Id")
                         .HasColumnType("INTEGER");
 
-                    b.Property<int>("InstrumentEntityId")
-                        .HasColumnType("INTEGER");
-
-                    b.Property<int>("ProviderEntityId")
-                        .HasColumnType("INTEGER");
-
                     b.HasKey("ProviderId", "InstrumentId");
 
-                    b.HasIndex("InstrumentEntityId");
+                    b.HasIndex("InstrumentId");
 
-                    b.HasIndex("ProviderEntityId");
+                    b.HasIndex("ProviderId", "InstrumentId")
+                        .IsUnique();
 
                     b.ToTable("InstrumentProviders", (string)null);
                 });
@@ -87,8 +82,8 @@ namespace MarketAssetPriceAPI.Migrations
                     b.Property<int?>("DefaultOrderSize")
                         .HasColumnType("INTEGER");
 
-                    b.Property<string>("Exchange")
-                        .HasColumnType("TEXT");
+                    b.Property<int?>("ExchangeId")
+                        .HasColumnType("INTEGER");
 
                     b.Property<string>("ProviderName")
                         .HasColumnType("TEXT");
@@ -101,19 +96,50 @@ namespace MarketAssetPriceAPI.Migrations
                     b.ToTable("Providers");
                 });
 
+            modelBuilder.Entity("MarketAssetPriceAPI.Data.Models.Entities.ExchangeEntity", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("INTEGER");
+
+                    b.Property<string>("ExchangeName")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.Property<int?>("ProviderEntityId")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int>("ProviderId")
+                        .HasColumnType("INTEGER");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ProviderEntityId");
+
+                    b.ToTable("Exchanges");
+                });
+
             modelBuilder.Entity("MarketAssetPriceAPI.Data.Models.DTOs.InstrumentProviderRelationEntity", b =>
                 {
                     b.HasOne("MarketAssetPriceAPI.Data.Models.DTOs.InstrumentEntity", null)
                         .WithMany()
-                        .HasForeignKey("InstrumentEntityId")
+                        .HasForeignKey("InstrumentId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("MarketAssetPriceAPI.Data.Models.DTOs.ProviderEntity", null)
                         .WithMany()
-                        .HasForeignKey("ProviderEntityId")
+                        .HasForeignKey("ProviderId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+                });
+
+            modelBuilder.Entity("MarketAssetPriceAPI.Data.Models.Entities.ExchangeEntity", b =>
+                {
+                    b.HasOne("MarketAssetPriceAPI.Data.Models.DTOs.ProviderEntity", null)
+                        .WithMany()
+                        .HasForeignKey("ProviderEntityId")
+                        .OnDelete(DeleteBehavior.Cascade);
                 });
 #pragma warning restore 612, 618
         }

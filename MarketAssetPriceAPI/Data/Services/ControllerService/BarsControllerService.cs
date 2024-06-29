@@ -8,14 +8,16 @@ using System.Web;
 using MarketAssetPriceAPI.Data.Models.ApiProviderModels.ConnectionModels;
 using MarketAssetPriceAPI.Data.Models.ApiProviderModels.Bars.CountBack;
 using MarketAssetPriceAPI.Data.Models.ApiProviderModels.Bars.QueryParameters;
+using MarketAssetPriceAPI.Data.Services.ControllerService;
 
 
-public class BarsControllerService(HttpClient httpClient, IOptions<FintachartCredentials> credentials, TokenControllerService tokenService) : AuthorizedControllerService(tokenService)
+public class BarsControllerService(HttpClient httpClient, IOptions<FintachartCredentials> credentials, ITokenControllerService tokenService)
+    : AuthorizedControllerService(tokenService), IBarsControllerService
 {
     private readonly HttpClient _httpClient = httpClient;
     private readonly FintachartCredentials _credentials = credentials.Value;
 
-    public async Task<BarsApiResponse> GetBarsDataAsync(IBarsQueryParameters queryParams)
+    public async Task<BarsApiResponse> GetBarsData(IBarsQueryParameters queryParams)
     {
         await SetAuthorizationHeaderAsync(_httpClient);
         var response = await _httpClient.GetAsync(BuildBarsQuery(queryParams));

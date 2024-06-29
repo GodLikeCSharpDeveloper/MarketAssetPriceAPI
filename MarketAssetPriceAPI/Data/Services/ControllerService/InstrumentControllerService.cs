@@ -4,6 +4,7 @@ using MarketAssetPriceAPI.Data.Models.ApiProviderModels.Instruments;
 using MarketAssetPriceAPI.Data.Models.ApiProviderModels.Providers;
 using MarketAssetPriceAPI.Data.Models.DTOs;
 using MarketAssetPriceAPI.Data.Repository;
+using MarketAssetPriceAPI.Data.Services.ControllerService;
 using MarketAssetPriceAPI.Data.Services.DbService;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Options;
@@ -17,13 +18,13 @@ using System.Web;
 
 namespace MarketAssetPriceAPI.Data.Services
 {
-    public class InstrumentControllerService(InstrumentService instrumentService, HttpClient httpClient, TokenControllerService tokenService, IOptions<FintachartCredentials> credentials) : AuthorizedControllerService(tokenService)
+    public class InstrumentControllerService(IInstrumentService instrumentService, HttpClient httpClient, ITokenControllerService tokenService, IOptions<FintachartCredentials> credentials) : AuthorizedControllerService(tokenService), IInstrumentControllerService
     {
         private readonly HttpClient _httpClient = httpClient;
         private readonly FintachartCredentials _credentials = credentials.Value;
-        private readonly InstrumentService instrumentService = instrumentService;
+        private readonly IInstrumentService instrumentService = instrumentService;
 
-        public async Task<InstrumentsResponse> GetInstrumentsAsync(InstrumentQueryParameters parameters)
+        public async Task<InstrumentsResponse> GetInstruments(InstrumentQueryParameters parameters)
         {
             await SetAuthorizationHeaderAsync(_httpClient);
             var response = await _httpClient.GetAsync(ConstructInstrumentsUrl(parameters));
@@ -34,7 +35,7 @@ namespace MarketAssetPriceAPI.Data.Services
             }
             response.EnsureSuccessStatusCode();
             var deserializedResponse = JsonConvert.DeserializeObject<InstrumentsResponse>(await response.Content.ReadAsStringAsync());
-            await instrumentService.AddNewInstrumentsAsync(deserializedResponse.Instruments);
+            await instrumentService.AddNewInstruments(deserializedResponse.Instruments);
             return deserializedResponse;
         }
         private string ConstructInstrumentsUrl(InstrumentQueryParameters parameters)
@@ -57,7 +58,7 @@ namespace MarketAssetPriceAPI.Data.Services
             var resultString = uriBuilder.ToString();
             return resultString;
         }
-        public async Task<ExchangeResponse> GetExchangesAsync(ExchangesQueryParameters parameters)
+        public async Task<ExchangeResponse> GetExchanges(ExchangesQueryParameters parameters)
         {
             await SetAuthorizationHeaderAsync(_httpClient);
             var response = await _httpClient.GetAsync(ConstructExchangesUrl(parameters));
@@ -80,7 +81,7 @@ namespace MarketAssetPriceAPI.Data.Services
             var result = uriBuilder.ToString();
             return result;
         }
-        public async Task<Providers> GetProvidersAsync()
+        public async Task<Providers> GetProviders()
         {
             await SetAuthorizationHeaderAsync(_httpClient);
             var response = await _httpClient.GetAsync($"{_credentials.BaseUrl}/api/instruments/v1/providers");

@@ -79,8 +79,8 @@ namespace MarketAssetPriceAPI.Migrations
                     b.Property<int?>("DefaultOrderSize")
                         .HasColumnType("INTEGER");
 
-                    b.Property<string>("Exchange")
-                        .HasColumnType("TEXT");
+                    b.Property<int?>("ExchangeId")
+                        .HasColumnType("INTEGER");
 
                     b.Property<string>("ProviderName")
                         .HasColumnType("TEXT");
@@ -91,6 +91,26 @@ namespace MarketAssetPriceAPI.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Providers");
+                });
+
+            modelBuilder.Entity("MarketAssetPriceAPI.Data.Models.Entities.ExchangeEntity", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("INTEGER");
+
+                    b.Property<string>("ExchangeName")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.Property<int?>("ProviderId")
+                        .HasColumnType("INTEGER");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ProviderId");
+
+                    b.ToTable("Exchanges");
                 });
 
             modelBuilder.Entity("MarketAssetPriceAPI.Data.Models.DTOs.InstrumentProviderRelationEntity", b =>
@@ -106,6 +126,14 @@ namespace MarketAssetPriceAPI.Migrations
                         .HasForeignKey("ProviderId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+                });
+
+            modelBuilder.Entity("MarketAssetPriceAPI.Data.Models.Entities.ExchangeEntity", b =>
+                {
+                    b.HasOne("MarketAssetPriceAPI.Data.Models.DTOs.ProviderEntity", null)
+                        .WithMany()
+                        .HasForeignKey("ProviderId")
+                        .OnDelete(DeleteBehavior.Cascade);
                 });
 #pragma warning restore 612, 618
         }

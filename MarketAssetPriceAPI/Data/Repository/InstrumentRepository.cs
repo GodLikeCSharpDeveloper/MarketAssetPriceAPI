@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace MarketAssetPriceAPI.Data.Repository
 {
-    public class InstrumentRepository(MarketDbContext marketDbContext)
+    public class InstrumentRepository(MarketDbContext marketDbContext): IInstrumentRepository
     {
         private readonly MarketDbContext marketDbContext = marketDbContext;
         public async Task<InstrumentEntity> AddNewInstrument(InstrumentEntity instrument)
@@ -19,7 +19,7 @@ namespace MarketAssetPriceAPI.Data.Repository
             await SaveChangesAsync();
             return instruments;
         }
-        public async Task<List<InstrumentEntity>> GetInstrumentsByApiProviderIdsAsync(List<string> apiProviderIds)
+        public async Task<List<InstrumentEntity>> GetInstrumentsByApiProviderIds(List<string> apiProviderIds)
         {
             return await marketDbContext.Instruments
                 .Where(i => apiProviderIds.Contains(i.ApiProviderId))

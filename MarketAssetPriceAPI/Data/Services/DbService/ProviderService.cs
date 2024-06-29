@@ -6,17 +6,17 @@ using System.Diagnostics.Metrics;
 
 namespace MarketAssetPriceAPI.Data.Services.DbService
 {
-    public class ProviderService(ProviderRepository providerRepository)
+    public class ProviderService(IProviderRepository providerRepository): IProviderService
     {
-        private readonly ProviderRepository providerRepository = providerRepository;
-        public async Task<ProviderEntity> AddNewProviderAsync(ProviderEntity provider)
+        private readonly IProviderRepository providerRepository = providerRepository;
+        public async Task<ProviderEntity> AddNewProvider(ProviderEntity provider)
         {
-            await providerRepository.AddNewProviderAsync(provider);
+            await providerRepository.AddNewProvider(provider);
             return provider;
         }
-        public async Task<List<ProviderEntity>> AddNewProvidersAsync(List<ProviderEntity> providerValues)
+        public async Task<List<ProviderEntity>> AddNewProviders(List<ProviderEntity> providerValues)
         {      
-            await providerRepository.AddNewProvidersAsync(providerValues);
+            await providerRepository.AddNewProviders(providerValues);
             return providerValues;
         }
     }

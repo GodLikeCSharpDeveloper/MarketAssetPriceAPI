@@ -2,7 +2,7 @@
 
 namespace MarketAssetPriceAPI.Data.Repository
 {
-    public class InstrumentProviderRepository(MarketDbContext marketDbContext)
+    public class InstrumentProviderRepository(MarketDbContext marketDbContext): IInstrumentProviderRepository
     {
         private readonly MarketDbContext marketDbContext = marketDbContext;
         public async Task AddNewInstrumentProvider(InstrumentProviderRelationEntity instrumentProvider)

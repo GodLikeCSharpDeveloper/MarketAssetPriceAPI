@@ -1,5 +1,6 @@
 ﻿using MarketAssetPriceAPI.Data.Extensions.Tokens;
 using MarketAssetPriceAPI.Data.Models.ApiProviderModels.ConnectionModels;
+using MarketAssetPriceAPI.Data.Services.ControllerService;
 using Microsoft.Extensions.Options;
 using Newtonsoft.Json;
 using System.Net.Http;
@@ -8,24 +9,22 @@ namespace MarketAssetPriceAPI.Data.Services
 {
     public class TokenControllerService(IHttpClientFactory httpClientFactory,
         IOptions<FintachartCredentials> credentials,
-        ILogger<TokenControllerService> logger,
-        TokenResponseStore tokenResponse)
+        TokenResponseStore tokenResponse) : ITokenControllerService
     {
         private readonly IHttpClientFactory _httpClientFactory = httpClientFactory;
         private readonly FintachartCredentials _credentials = credentials.Value;
-        private readonly ILogger<TokenControllerService> _logger = logger;
         private readonly TokenResponseStore _tokenResponse = tokenResponse;
 
-        public async Task<string> GetAccessTokenAsync()
+        public async Task<string> GetAccessToken()
         {
             if (string.IsNullOrEmpty(_tokenResponse.RefreshToken) || IsTokenExpired(_tokenResponse.RefreshToken))
-                await ReinitializeAuthorizationAsync();
+                await ReinitializeAuthorization();
             else if (string.IsNullOrEmpty(_tokenResponse.AccessToken) || IsTokenExpired(_tokenResponse.AccessToken))
                 await RefreshTokenAsync();
             return _tokenResponse.AccessToken;
         }
 
-        public async Task ReinitializeAuthorizationAsync()
+        public async Task ReinitializeAuthorization()
         {
             var client = _httpClientFactory.CreateClient();
             var request = ConstructRequest(GetAccessTokenHttpRequestContent());

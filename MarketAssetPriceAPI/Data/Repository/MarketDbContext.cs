@@ -1,4 +1,5 @@
 ﻿using MarketAssetPriceAPI.Data.Models.DTOs;
+using MarketAssetPriceAPI.Data.Models.Entities;
 using Microsoft.EntityFrameworkCore;
 
 namespace MarketAssetPriceAPI.Data.Repository
@@ -7,6 +8,7 @@ namespace MarketAssetPriceAPI.Data.Repository
     {
         public MarketDbContext(DbContextOptions<MarketDbContext> options) : base(options) { }
         public DbSet<InstrumentEntity> Instruments { get; set; }
+        public DbSet<ExchangeEntity> Exchanges { get; set; }
         public DbSet<ProviderEntity> Providers { get; set; }
         public DbSet<InstrumentProviderRelationEntity> InstrumentProviderRelations { get; set; }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -34,6 +36,10 @@ namespace MarketAssetPriceAPI.Data.Repository
                 .HasOne<ProviderEntity>()
                 .WithMany()
                 .HasForeignKey(ip => ip.ProviderId)
+                .OnDelete(DeleteBehavior.Cascade);
+            modelBuilder.Entity<ExchangeEntity>()
+                .HasOne<ProviderEntity>()
+                .WithMany()
                 .OnDelete(DeleteBehavior.Cascade);
         }
     }

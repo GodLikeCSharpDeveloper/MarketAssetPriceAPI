@@ -1,24 +1,21 @@
-﻿using System.Net.Http.Headers;
+﻿using MarketAssetPriceAPI.Data.Services.ControllerService;
+using System.Net.Http.Headers;
 
 namespace MarketAssetPriceAPI.Data.Services
 {
-    public abstract class AuthorizedControllerService
+    public abstract class AuthorizedControllerService(ITokenControllerService tokenService)
     {
-        private readonly TokenControllerService _tokenService;
+        private readonly ITokenControllerService _tokenService = tokenService;
 
-        protected AuthorizedControllerService(TokenControllerService tokenService)
-        {
-            _tokenService = tokenService;
-        }
         protected async Task SetAuthorizationHeaderAsync(HttpClient httpClient)
         {
-            var accessToken = await _tokenService.GetAccessTokenAsync();
+            var accessToken = await _tokenService.GetAccessToken();
             httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", accessToken);
         }
 
         protected async Task ReinitializeAuthorizationAsync(HttpClient httpClient)
         {
-            await _tokenService.ReinitializeAuthorizationAsync();
+            await _tokenService.ReinitializeAuthorization();
             await SetAuthorizationHeaderAsync(httpClient);
         }
     }
