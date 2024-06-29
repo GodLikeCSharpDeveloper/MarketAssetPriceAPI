@@ -1,4 +1,7 @@
-﻿namespace MarketAssetPriceAPI.Data.Models.DTOs
+﻿using MarketAssetPriceAPI.Data.Models.ApiProviderModels.Instruments;
+using System.ComponentModel.DataAnnotations.Schema;
+
+namespace MarketAssetPriceAPI.Data.Models.DTOs
 {
     public class InstrumentEntity
     {
@@ -10,6 +13,7 @@
         public double? TickSize { get; set; }
         public string? Currency { get; set; }
         public string? BaseCurrency { get; set; }
-        
+        [NotMapped]
+        public List<ProviderEntity> Providers { get; set; }
     }
 }

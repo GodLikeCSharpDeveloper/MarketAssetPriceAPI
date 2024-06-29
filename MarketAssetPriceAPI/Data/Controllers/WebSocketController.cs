@@ -1,5 +1,4 @@
-﻿using MarketAssetPriceAPI.Data.Models.Instruments;
-using MarketAssetPriceAPI.Data.Services;
+﻿using MarketAssetPriceAPI.Data.Services;
 using Microsoft.AspNetCore.Mvc;
 
 namespace MarketAssetPriceAPI.Data.Controllers

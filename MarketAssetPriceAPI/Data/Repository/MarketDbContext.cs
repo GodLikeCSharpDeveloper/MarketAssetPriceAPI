@@ -1,6 +1,4 @@
 ﻿using MarketAssetPriceAPI.Data.Models.DTOs;
-using MarketAssetPriceAPI.Data.Models.Instruments;
-using MarketAssetPriceAPI.Data.Models.Providers;
 using Microsoft.EntityFrameworkCore;
 
 namespace MarketAssetPriceAPI.Data.Repository
@@ -14,11 +12,29 @@ namespace MarketAssetPriceAPI.Data.Repository
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<InstrumentProviderRelationEntity>()
-            .HasKey(ip => new { ip.ProviderId, ip.InstrumentId });
+                .HasIndex(ip => new { ip.ProviderId, ip.InstrumentId })
+                .IsUnique();
+            modelBuilder.Entity<InstrumentProviderRelationEntity>()
+               .HasOne<ProviderEntity>()
+               .WithMany()
+               .HasForeignKey(ip => ip.ProviderId)
+               .OnDelete(DeleteBehavior.Cascade);
+            modelBuilder.Entity<InstrumentProviderRelationEntity>()
+                .HasOne<InstrumentEntity>()
+                .WithMany()
+                .HasForeignKey(ip => ip.InstrumentId)
+                .OnDelete(DeleteBehavior.Cascade);
+            modelBuilder.Entity<InstrumentProviderRelationEntity>()
+                .HasKey(ip => new { ip.ProviderId, ip.InstrumentId });
             modelBuilder.Entity<InstrumentEntity>()
-            .HasMany<ProviderEntity>()
-            .WithMany()
-            .UsingEntity<InstrumentProviderRelationEntity>(j => j.ToTable("InstrumentProviders"));
+                .HasMany<ProviderEntity>()
+                .WithMany()
+                .UsingEntity<InstrumentProviderRelationEntity>(j => j.ToTable("InstrumentProviders"));
+            modelBuilder.Entity<InstrumentProviderRelationEntity>()
+                .HasOne<ProviderEntity>()
+                .WithMany()
+                .HasForeignKey(ip => ip.ProviderId)
+                .OnDelete(DeleteBehavior.Cascade);
         }
     }
 }

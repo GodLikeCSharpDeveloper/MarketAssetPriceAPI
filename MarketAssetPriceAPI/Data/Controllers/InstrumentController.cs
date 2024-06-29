@@ -1,5 +1,5 @@
-﻿using MarketAssetPriceAPI.Data.Models.Exchanges;
-using MarketAssetPriceAPI.Data.Models.Instruments;
+﻿using MarketAssetPriceAPI.Data.Models.ApiProviderModels.Exchanges;
+using MarketAssetPriceAPI.Data.Models.ApiProviderModels.Instruments;
 using MarketAssetPriceAPI.Data.Services;
 using Microsoft.AspNetCore.Mvc;
 

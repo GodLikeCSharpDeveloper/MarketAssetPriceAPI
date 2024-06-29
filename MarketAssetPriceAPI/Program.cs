@@ -1,6 +1,7 @@
-using MarketAssetPriceAPI.Data.Models.ConnectionModels;
+using MarketAssetPriceAPI.Data.Models.ApiProviderModels.ConnectionModels;
 using MarketAssetPriceAPI.Data.Repository;
 using MarketAssetPriceAPI.Data.Services;
+using MarketAssetPriceAPI.Data.Services.DbService;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Options;
@@ -19,6 +20,11 @@ builder.Services.AddScoped<InstrumentControllerService>();
 builder.Services.AddScoped<BarsControllerService>();
 builder.Services.AddSingleton<WebSocketClientControllerService>();
 builder.Services.AddScoped<InstrumentRepository>();
+builder.Services.AddScoped<InstrumentService>();
+builder.Services.AddScoped<ProviderRepository>();
+builder.Services.AddScoped<ProviderService>();
+builder.Services.AddScoped<InstrumentProviderRepository>();
+builder.Services.AddScoped<InstrumentProviderService>();
 builder.Services.AddSingleton<TokenControllerService>();
 builder.Services.AddDbContext<MarketDbContext>(options =>
             options.UseSqlite(builder.Configuration.GetConnectionString("DefaultConnection")));

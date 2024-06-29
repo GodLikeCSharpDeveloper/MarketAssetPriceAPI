@@ -10,5 +10,10 @@ namespace MarketAssetPriceAPI.Data.Repository
             await marketDbContext.AddAsync(instrumentProvider);
             await marketDbContext.SaveChangesAsync();
         }
+        public async Task AddNewInstrumentProviders(List<InstrumentProviderRelationEntity> instrumentProviders)
+        {
+            await marketDbContext.AddRangeAsync(instrumentProviders);
+            await marketDbContext.SaveChangesAsync();
+        }
     }
 }

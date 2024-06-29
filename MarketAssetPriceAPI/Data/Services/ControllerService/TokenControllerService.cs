@@ -1,5 +1,5 @@
 ﻿using MarketAssetPriceAPI.Data.Extensions.Tokens;
-using MarketAssetPriceAPI.Data.Models.ConnectionModels;
+using MarketAssetPriceAPI.Data.Models.ApiProviderModels.ConnectionModels;
 using Microsoft.Extensions.Options;
 using Newtonsoft.Json;
 using System.Net.Http;

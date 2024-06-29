@@ -3,11 +3,11 @@ using Newtonsoft.Json;
 using System.Net;
 using System.Text;
 using Microsoft.AspNetCore.Http;
-using MarketAssetPriceAPI.Data.Models.ConnectionModels;
 using MarketAssetPriceAPI.Data.Services;
-using MarketAssetPriceAPI.Models.Bars;
-using MarketAssetPriceAPI.Models.Bars.QueryParameters;
 using System.Web;
+using MarketAssetPriceAPI.Data.Models.ApiProviderModels.ConnectionModels;
+using MarketAssetPriceAPI.Data.Models.ApiProviderModels.Bars.CountBack;
+using MarketAssetPriceAPI.Data.Models.ApiProviderModels.Bars.QueryParameters;
 
 
 public class BarsControllerService(HttpClient httpClient, IOptions<FintachartCredentials> credentials, TokenControllerService tokenService) : AuthorizedControllerService(tokenService)

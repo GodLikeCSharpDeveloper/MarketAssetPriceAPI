@@ -1,13 +1,15 @@
-﻿using MarketAssetPriceAPI.Data.Models.ConnectionModels;
+﻿using MarketAssetPriceAPI.Data.Models.ApiProviderModels.ConnectionModels;
+using MarketAssetPriceAPI.Data.Models.ApiProviderModels.Exchanges;
+using MarketAssetPriceAPI.Data.Models.ApiProviderModels.Instruments;
+using MarketAssetPriceAPI.Data.Models.ApiProviderModels.Providers;
 using MarketAssetPriceAPI.Data.Models.DTOs;
-using MarketAssetPriceAPI.Data.Models.Exchanges;
-using MarketAssetPriceAPI.Data.Models.Instruments;
-using MarketAssetPriceAPI.Data.Models.Providers;
 using MarketAssetPriceAPI.Data.Repository;
+using MarketAssetPriceAPI.Data.Services.DbService;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Options;
 using Newtonsoft.Json;
 using System.Diagnostics.Metrics;
+using System.Drawing;
 using System.Net;
 using System.Net.Http.Headers;
 using System.Text;
@@ -15,11 +17,11 @@ using System.Web;
 
 namespace MarketAssetPriceAPI.Data.Services
 {
-    public class InstrumentControllerService(InstrumentRepository instrumentRepository, HttpClient httpClient, TokenControllerService tokenService, IOptions<FintachartCredentials> credentials) : AuthorizedControllerService(tokenService)
+    public class InstrumentControllerService(InstrumentService instrumentService, HttpClient httpClient, TokenControllerService tokenService, IOptions<FintachartCredentials> credentials) : AuthorizedControllerService(tokenService)
     {
         private readonly HttpClient _httpClient = httpClient;
         private readonly FintachartCredentials _credentials = credentials.Value;
-        private readonly InstrumentRepository instrumentRepository = instrumentRepository;
+        private readonly InstrumentService instrumentService = instrumentService;
 
         public async Task<InstrumentsResponse> GetInstrumentsAsync(InstrumentQueryParameters parameters)
         {
@@ -32,39 +34,28 @@ namespace MarketAssetPriceAPI.Data.Services
             }
             response.EnsureSuccessStatusCode();
             var deserializedResponse = JsonConvert.DeserializeObject<InstrumentsResponse>(await response.Content.ReadAsStringAsync());
-            var instrument = deserializedResponse.Instruments.FirstOrDefault();
-            await instrumentRepository.AddNewInstrument(new Models.DTOs.InstrumentEntity
-            {
-                ApiProviderId = instrument.ApiProviderId,
-                BaseCurrency = instrument.BaseCurrency,
-                Currency = instrument.Currency,
-                Description = instrument.Description,
-                Kind = instrument.Kind,
-                Symbol = instrument.Symbol,
-                TickSize = instrument.TickSize
-            });
-
+            await instrumentService.AddNewInstrumentsAsync(deserializedResponse.Instruments);
             return deserializedResponse;
         }
         private string ConstructInstrumentsUrl(InstrumentQueryParameters parameters)
         {
             var uriBuilder = new UriBuilder(_credentials.BaseUrl);
-            string endpoint = "api/instruments/v1/instruments?";
+            string endpoint = "api/instruments/v1/instruments";
             uriBuilder.Path += endpoint;
             var query = HttpUtility.ParseQueryString(uriBuilder.Query);
             if (!string.IsNullOrEmpty(parameters.Provider))
                 query["provider"] += parameters.Provider;
             if (!string.IsNullOrEmpty(parameters.Kind))
-                query["kind"] +=parameters.Kind));
+                query["kind"] += parameters.Kind;
             if (!string.IsNullOrEmpty(parameters.Symbol))
-                query["kind"] += symbol ={Uri.EscapeDataString(parameters.Symbol)}&");
+                query["symbol"] += parameters.Symbol;
             if (parameters.Page != 0)
-                queryString.Append($"page={parameters.Page}&");
+                query["page"] += parameters.Page;
             if (parameters.Size != 0)
-                queryString.Append($"size={parameters.Size}&");
-            if (queryString[queryString.Length - 1] == '&')
-                queryString.Length--;
-            return queryString.ToString();
+                query["size"] += parameters.Size;
+            uriBuilder.Query = query.ToString();
+            var resultString = uriBuilder.ToString();
+            return resultString;
         }
         public async Task<ExchangeResponse> GetExchangesAsync(ExchangesQueryParameters parameters)
         {
@@ -81,10 +72,13 @@ namespace MarketAssetPriceAPI.Data.Services
         }
         private string ConstructExchangesUrl(ExchangesQueryParameters parameters)
         {
-            var queryString = new StringBuilder($"{_credentials.BaseUrl}/api/instruments/v1/exchanges");
+            var uriBuilder = new UriBuilder(_credentials.BaseUrl);
+            string endpoint = "api/instruments/v1/exchanges";
+            uriBuilder.Path += endpoint;
             if (!string.IsNullOrEmpty(parameters.Provider))
-                queryString.Append($"?provider={parameters.Provider}");
-            return queryString.ToString();
+                uriBuilder.Query = $"provider={parameters.Provider}";
+            var result = uriBuilder.ToString();
+            return result;
         }
         public async Task<Providers> GetProvidersAsync()
         {

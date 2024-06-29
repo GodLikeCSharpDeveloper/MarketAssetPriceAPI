@@ -3,6 +3,7 @@ using System;
 using MarketAssetPriceAPI.Data.Repository;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -10,9 +11,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace MarketAssetPriceAPI.Migrations
 {
     [DbContext(typeof(MarketDbContext))]
-    partial class MarketDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240629143531_second")]
+    partial class second
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder.HasAnnotation("ProductVersion", "8.0.6");
@@ -60,12 +63,17 @@ namespace MarketAssetPriceAPI.Migrations
                     b.Property<int>("Id")
                         .HasColumnType("INTEGER");
 
+                    b.Property<int>("InstrumentEntityId")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int>("ProviderEntityId")
+                        .HasColumnType("INTEGER");
+
                     b.HasKey("ProviderId", "InstrumentId");
 
-                    b.HasIndex("InstrumentId");
+                    b.HasIndex("InstrumentEntityId");
 
-                    b.HasIndex("ProviderId", "InstrumentId")
-                        .IsUnique();
+                    b.HasIndex("ProviderEntityId");
 
                     b.ToTable("InstrumentProviders", (string)null);
                 });
@@ -97,13 +105,13 @@ namespace MarketAssetPriceAPI.Migrations
                 {
                     b.HasOne("MarketAssetPriceAPI.Data.Models.DTOs.InstrumentEntity", null)
                         .WithMany()
-                        .HasForeignKey("InstrumentId")
+                        .HasForeignKey("InstrumentEntityId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("MarketAssetPriceAPI.Data.Models.DTOs.ProviderEntity", null)
                         .WithMany()
-                        .HasForeignKey("ProviderId")
+                        .HasForeignKey("ProviderEntityId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
