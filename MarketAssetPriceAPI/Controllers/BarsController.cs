@@ -1,6 +1,5 @@
-﻿using MarketAssetPriceAPI.Models.Bars.QueryParameters;
-using MarketAssetPriceAPI.Models.Instruments;
-using MarketAssetPriceAPI.Services;
+﻿using MarketAssetPriceAPI.Data.Models.Bars.QueryParameters;
+using MarketAssetPriceAPI.Data.Services;
 using Microsoft.AspNetCore.Mvc;
 
 namespace MarketAssetPriceAPI.Controllers
