@@ -1,7 +1,9 @@
 ﻿using MarketAssetPriceAPI.Data.Controllers;
 using MarketAssetPriceAPI.Data.Models.ApiProviderModels.Bars.CountBack;
 using MarketAssetPriceAPI.Data.Models.ApiProviderModels.Bars.QueryParameters;
+using MarketAssetPriceAPI.Data.Models.ApiProviderModels.Exchanges;
 using MarketAssetPriceAPI.Data.Models.ApiProviderModels.Instruments;
+using MarketAssetPriceAPI.Data.Models.ApiProviderModels.Providers;
 using MarketAssetPriceAPI.Data.Services.ControllerService;
 using Microsoft.AspNetCore.Mvc;
 using Moq;
@@ -29,7 +31,7 @@ namespace MarketAssetPriceApiTest
         public async Task GetBarsCountBack_ReturnsBadRequestResult_WithExpectedData()
         {
             // Arrange
-            var parameters = new BarsCountBackQueryParameters { };
+            var parameters = new InstrumentQueryParameters { };
             var expectedData = new InstrumentsResponse {  };
             _mockInstrumentService.Setup(s => s.GetInstruments(It.IsAny<InstrumentQueryParameters>())).Returns(Task.FromResult(expectedData));
 
@@ -38,7 +40,7 @@ namespace MarketAssetPriceApiTest
 
             // Assert
             Assert.That(result, Is.Not.Null);
-            Assert.That(result.StatusCode, Is.EqualTo(400));
+            Assert.That(result.StatusCode, Is.EqualTo(200));
             Assert.That(result.Value, Is.EqualTo(expectedData));
         }
 
@@ -46,16 +48,16 @@ namespace MarketAssetPriceApiTest
         public async Task GetBarsDateRange_ReturnsOkResult_WithExpectedData()
         {
             // Arrange
-            var parameters = new BarsDateRangeQueryParameters { };
-            var expectedData = new BarsApiResponse { };
-            _mockBarsService.Setup(s => s.GetBarsData(parameters)).Returns(Task.FromResult(expectedData));
+            var parameters = new ExchangesQueryParameters { };
+            var expectedData = new ExchangeResponse { };
+            _mockInstrumentService.Setup(s => s.GetExchanges(parameters)).Returns(Task.FromResult(expectedData));
 
             // Act
-            var result = await _controller.GetBarsDateRange(parameters) as BadRequestObjectResult;
+            var result = await _controller.GetAllExchanges(parameters) as OkObjectResult;
 
             // Assert
             Assert.That(result, Is.Not.Null);
-            Assert.That(result.StatusCode, Is.EqualTo(400));
+            Assert.That(result.StatusCode, Is.EqualTo(200));
             Assert.That(result.Value, Is.EqualTo(expectedData));
         }
 
@@ -63,16 +65,15 @@ namespace MarketAssetPriceApiTest
         public async Task GetBarsTimeBack_ReturnsOkResult_WithExpectedData()
         {
             // Arrange
-            var parameters = new BarsTimeBackQueryParameters { };
-            var expectedData = new BarsApiResponse { };
-            _mockBarsService.Setup(s => s.GetBarsData(parameters)).Returns(Task.FromResult(expectedData));
+            var expectedData = new Providers { };
+            _mockInstrumentService.Setup(s => s.GetProviders()).Returns(Task.FromResult(expectedData));
 
             // Act
-            var result = await _controller.GetBarsDateRange(parameters) as BadRequestObjectResult;
+            var result = await _controller.GetAllProviders() as OkObjectResult;
 
             // Assert
             Assert.That(result, Is.Not.Null);
-            Assert.That(result.StatusCode, Is.EqualTo(400));
+            Assert.That(result.StatusCode, Is.EqualTo(200));
             Assert.That(result.Value, Is.EqualTo(expectedData));
         }
     }

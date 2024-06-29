@@ -30,7 +30,7 @@ namespace MarketAssetPriceApiTest
         }
 
         [Test]
-        public async Task GetBarsCountBack_ReturnsBadRequestResult_WithExpectedData()
+        public async Task GetBarsCountBack_ReturnsBadResult_WithExpectedData()
         {
             // Arrange
             var parameters = new BarsCountBackQueryParameters { };
@@ -44,14 +44,35 @@ namespace MarketAssetPriceApiTest
             Assert.That(result, Is.Not.Null);
             Assert.That(result.StatusCode, Is.EqualTo(400));
             Assert.That(result.Value, Is.EqualTo(expectedData));
+            var response = result.Value as BarsApiResponse;
+            Assert.That(response, Is.Not.Null);
+            Assert.That(response.ErrorResponse, Is.Not.Null);
         }
-
         [Test]
-        public async Task GetBarsDateRange_ReturnsOkResult_WithExpectedData()
+        public async Task GetBarsCountBack_ReturnsOkResult_WithExpectedData()
+        {
+            // Arrange
+            var parameters = new BarsCountBackQueryParameters { };
+            var expectedData = new BarsApiResponse { IsSuccess = true, SuccessResponse = new() };
+            _mockBarsService.Setup(s => s.GetBarsData(It.IsAny<BarsCountBackQueryParameters>())).Returns(Task.FromResult(expectedData));
+
+            // Act
+            var result = await _controller.GetBarsCountBack(parameters) as OkObjectResult;
+
+            // Assert
+            Assert.That(result, Is.Not.Null);
+            Assert.That(result.StatusCode, Is.EqualTo(200));
+            Assert.That(result.Value, Is.EqualTo(expectedData));
+            var response = result.Value as BarsApiResponse;
+            Assert.That(response, Is.Not.Null);
+            Assert.That(response.SuccessResponse, Is.Not.Null);
+        }
+        [Test]
+        public async Task GetBarsDateRange_ReturnsBadResult_WithExpectedData()
         {
             // Arrange
             var parameters = new BarsDateRangeQueryParameters {  };
-            var expectedData = new BarsApiResponse { };
+            var expectedData = new BarsApiResponse { IsSuccess = false, ErrorResponse = new ErrorResponse() { } };
             _mockBarsService.Setup(s => s.GetBarsData(parameters)).Returns(Task.FromResult(expectedData));
 
             // Act
@@ -61,23 +82,66 @@ namespace MarketAssetPriceApiTest
             Assert.That(result, Is.Not.Null);
             Assert.That(result.StatusCode, Is.EqualTo(400));
             Assert.That(result.Value, Is.EqualTo(expectedData));
+            var response = result.Value as BarsApiResponse;
+            Assert.That(response, Is.Not.Null);
+            Assert.That(response.ErrorResponse, Is.Not.Null);
         }
+        [Test]
+        public async Task GetBarsDateRange_ReturnsOkResult_WithExpectedData()
+        {
+            // Arrange
+            var parameters = new BarsDateRangeQueryParameters { };
+            var expectedData = new BarsApiResponse { IsSuccess = true, SuccessResponse = new() };
+            _mockBarsService.Setup(s => s.GetBarsData(parameters)).Returns(Task.FromResult(expectedData));
 
+            // Act
+            var result = await _controller.GetBarsDateRange(parameters) as OkObjectResult;
+
+            // Assert
+            Assert.That(result, Is.Not.Null);
+            Assert.That(result.StatusCode, Is.EqualTo(200));
+            Assert.That(result.Value, Is.EqualTo(expectedData));
+            var response = result.Value as BarsApiResponse;
+            Assert.That(response, Is.Not.Null);
+            Assert.That(response.SuccessResponse, Is.Not.Null);
+        }
+        [Test]
+        public async Task GetBarsTimeBack_ReturnsBadResult_WithExpectedData()
+        {
+            // Arrange
+            var parameters = new BarsTimeBackQueryParameters { };
+            var expectedData = new BarsApiResponse { IsSuccess = false, ErrorResponse = new ErrorResponse() { } };
+            _mockBarsService.Setup(s => s.GetBarsData(parameters)).Returns(Task.FromResult(expectedData));
+
+            // Act
+            var result = await _controller.GetBarsDateRange(parameters) as BadRequestObjectResult;
+
+            // Assert
+            Assert.That(result, Is.Not.Null);
+            Assert.That(result.StatusCode, Is.EqualTo(400));
+            Assert.That(result.Value, Is.EqualTo(expectedData));
+            var response = result.Value as BarsApiResponse;
+            Assert.That(response, Is.Not.Null);
+            Assert.That(response.ErrorResponse, Is.Not.Null);
+        }
         [Test]
         public async Task GetBarsTimeBack_ReturnsOkResult_WithExpectedData()
         {
             // Arrange
             var parameters = new BarsTimeBackQueryParameters { };
-            var expectedData = new BarsApiResponse { };
+            var expectedData = new BarsApiResponse { IsSuccess = true, SuccessResponse = new() };
             _mockBarsService.Setup(s => s.GetBarsData(parameters)).Returns(Task.FromResult(expectedData));
 
             // Act
-            var result = await _controller.GetBarsDateRange(parameters) as BadRequestObjectResult;
+            var result = await _controller.GetBarsDateRange(parameters) as OkObjectResult;
 
             // Assert
             Assert.That(result, Is.Not.Null);
-            Assert.That(result.StatusCode, Is.EqualTo(400));
+            Assert.That(result.StatusCode, Is.EqualTo(200));
             Assert.That(result.Value, Is.EqualTo(expectedData));
+            var response = result.Value as BarsApiResponse;
+            Assert.That(response, Is.Not.Null);
+            Assert.That(response.SuccessResponse, Is.Not.Null);
         }
     }
 }
