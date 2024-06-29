@@ -1,46 +1,10 @@
 {
   "Version": 1,
-  "WorkspaceRootPath": "D:\\New folder\\MarketAssetPriceAPI\\",
+  "WorkspaceRootPath": "D:\\New folder\\New folder\\MarketAssetPriceAPI\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{6CDD0BB7-6956-4A1B-8003-9CEC6D541F16}|MarketAssetPriceAPI\\MarketAssetPriceAPI.csproj|d:\\new folder\\marketassetpriceapi\\marketassetpriceapi\\services\\barsservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{6CDD0BB7-6956-4A1B-8003-9CEC6D541F16}|MarketAssetPriceAPI\\MarketAssetPriceAPI.csproj|solutionrelative:marketassetpriceapi\\services\\barsservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{6CDD0BB7-6956-4A1B-8003-9CEC6D541F16}|MarketAssetPriceAPI\\MarketAssetPriceAPI.csproj|d:\\new folder\\marketassetpriceapi\\marketassetpriceapi\\controllers\\barscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{6CDD0BB7-6956-4A1B-8003-9CEC6D541F16}|MarketAssetPriceAPI\\MarketAssetPriceAPI.csproj|solutionrelative:marketassetpriceapi\\controllers\\barscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{6CDD0BB7-6956-4A1B-8003-9CEC6D541F16}|MarketAssetPriceAPI\\MarketAssetPriceAPI.csproj|d:\\new folder\\marketassetpriceapi\\marketassetpriceapi\\models\\bars\\countback\\barsbadrequestresponse.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{6CDD0BB7-6956-4A1B-8003-9CEC6D541F16}|MarketAssetPriceAPI\\MarketAssetPriceAPI.csproj|solutionrelative:marketassetpriceapi\\models\\bars\\countback\\barsbadrequestresponse.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{6CDD0BB7-6956-4A1B-8003-9CEC6D541F16}|MarketAssetPriceAPI\\MarketAssetPriceAPI.csproj|d:\\new folder\\marketassetpriceapi\\marketassetpriceapi\\models\\bars\\countback\\errorresponse.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{6CDD0BB7-6956-4A1B-8003-9CEC6D541F16}|MarketAssetPriceAPI\\MarketAssetPriceAPI.csproj|solutionrelative:marketassetpriceapi\\models\\bars\\countback\\errorresponse.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{6CDD0BB7-6956-4A1B-8003-9CEC6D541F16}|MarketAssetPriceAPI\\MarketAssetPriceAPI.csproj|d:\\new folder\\marketassetpriceapi\\marketassetpriceapi\\models\\bars\\barsdaterangequeryparameters.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{6CDD0BB7-6956-4A1B-8003-9CEC6D541F16}|MarketAssetPriceAPI\\MarketAssetPriceAPI.csproj|solutionrelative:marketassetpriceapi\\models\\bars\\barsdaterangequeryparameters.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{6CDD0BB7-6956-4A1B-8003-9CEC6D541F16}|MarketAssetPriceAPI\\MarketAssetPriceAPI.csproj|d:\\new folder\\marketassetpriceapi\\marketassetpriceapi\\models\\instruments\\instrumentsresponse.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{6CDD0BB7-6956-4A1B-8003-9CEC6D541F16}|MarketAssetPriceAPI\\MarketAssetPriceAPI.csproj|solutionrelative:marketassetpriceapi\\models\\instruments\\instrumentsresponse.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{6CDD0BB7-6956-4A1B-8003-9CEC6D541F16}|MarketAssetPriceAPI\\MarketAssetPriceAPI.csproj|d:\\new folder\\marketassetpriceapi\\marketassetpriceapi\\controllers\\instrumentcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{6CDD0BB7-6956-4A1B-8003-9CEC6D541F16}|MarketAssetPriceAPI\\MarketAssetPriceAPI.csproj|solutionrelative:marketassetpriceapi\\controllers\\instrumentcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{6CDD0BB7-6956-4A1B-8003-9CEC6D541F16}|MarketAssetPriceAPI\\MarketAssetPriceAPI.csproj|d:\\new folder\\marketassetpriceapi\\marketassetpriceapi\\services\\authorizedservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{6CDD0BB7-6956-4A1B-8003-9CEC6D541F16}|MarketAssetPriceAPI\\MarketAssetPriceAPI.csproj|solutionrelative:marketassetpriceapi\\services\\authorizedservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{6CDD0BB7-6956-4A1B-8003-9CEC6D541F16}|MarketAssetPriceAPI\\MarketAssetPriceAPI.csproj|d:\\new folder\\marketassetpriceapi\\marketassetpriceapi\\services\\instrumentservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{6CDD0BB7-6956-4A1B-8003-9CEC6D541F16}|MarketAssetPriceAPI\\MarketAssetPriceAPI.csproj|solutionrelative:marketassetpriceapi\\services\\instrumentservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{6CDD0BB7-6956-4A1B-8003-9CEC6D541F16}|MarketAssetPriceAPI\\MarketAssetPriceAPI.csproj|d:\\new folder\\marketassetpriceapi\\marketassetpriceapi\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{6CDD0BB7-6956-4A1B-8003-9CEC6D541F16}|MarketAssetPriceAPI\\MarketAssetPriceAPI.csproj|solutionrelative:marketassetpriceapi\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{6CDD0BB7-6956-4A1B-8003-9CEC6D541F16}|MarketAssetPriceAPI\\MarketAssetPriceAPI.csproj|d:\\new folder\\new folder\\marketassetpriceapi\\marketassetpriceapi\\data\\services\\controllerservice\\instrumentcontrollerservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{6CDD0BB7-6956-4A1B-8003-9CEC6D541F16}|MarketAssetPriceAPI\\MarketAssetPriceAPI.csproj|solutionrelative:marketassetpriceapi\\data\\services\\controllerservice\\instrumentcontrollerservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
   ],
   "DocumentGroupContainers": [
@@ -50,7 +14,7 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 6,
+          "SelectedChildIndex": 1,
           "Children": [
             {
               "$type": "Bookmark",
@@ -58,128 +22,16 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 4,
-              "Title": "BarsDateRangeQueryParameters.cs",
-              "DocumentMoniker": "D:\\New folder\\MarketAssetPriceAPI\\MarketAssetPriceAPI\\Models\\Bars\\BarsDateRangeQueryParameters.cs",
-              "RelativeDocumentMoniker": "MarketAssetPriceAPI\\Models\\Bars\\BarsDateRangeQueryParameters.cs",
-              "ToolTip": "D:\\New folder\\MarketAssetPriceAPI\\MarketAssetPriceAPI\\Models\\Bars\\BarsDateRangeQueryParameters.cs",
-              "RelativeToolTip": "MarketAssetPriceAPI\\Models\\Bars\\BarsDateRangeQueryParameters.cs",
-              "ViewState": "AQIAAAAAAAAAAAAAAAAAABIAAAAAAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-06-28T17:53:01.493Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 5,
-              "Title": "InstrumentsResponse.cs",
-              "DocumentMoniker": "D:\\New folder\\MarketAssetPriceAPI\\MarketAssetPriceAPI\\Models\\Instruments\\InstrumentsResponse.cs",
-              "RelativeDocumentMoniker": "MarketAssetPriceAPI\\Models\\Instruments\\InstrumentsResponse.cs",
-              "ToolTip": "D:\\New folder\\MarketAssetPriceAPI\\MarketAssetPriceAPI\\Models\\Instruments\\InstrumentsResponse.cs",
-              "RelativeToolTip": "MarketAssetPriceAPI\\Models\\Instruments\\InstrumentsResponse.cs",
-              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-06-28T17:47:43.971Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 3,
-              "Title": "ErrorResponse.cs",
-              "DocumentMoniker": "D:\\New folder\\MarketAssetPriceAPI\\MarketAssetPriceAPI\\Models\\Bars\\CountBack\\ErrorResponse.cs",
-              "RelativeDocumentMoniker": "MarketAssetPriceAPI\\Models\\Bars\\CountBack\\ErrorResponse.cs",
-              "ToolTip": "D:\\New folder\\MarketAssetPriceAPI\\MarketAssetPriceAPI\\Models\\Bars\\CountBack\\ErrorResponse.cs",
-              "RelativeToolTip": "MarketAssetPriceAPI\\Models\\Bars\\CountBack\\ErrorResponse.cs",
-              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAoAAAAAAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-06-28T17:19:30.137Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 2,
-              "Title": "BarsBadRequestResponse.cs",
-              "DocumentMoniker": "D:\\New folder\\MarketAssetPriceAPI\\MarketAssetPriceAPI\\Models\\Bars\\CountBack\\BarsBadRequestResponse.cs",
-              "RelativeDocumentMoniker": "MarketAssetPriceAPI\\Models\\Bars\\CountBack\\BarsBadRequestResponse.cs",
-              "ToolTip": "D:\\New folder\\MarketAssetPriceAPI\\MarketAssetPriceAPI\\Models\\Bars\\CountBack\\BarsBadRequestResponse.cs",
-              "RelativeToolTip": "MarketAssetPriceAPI\\Models\\Bars\\CountBack\\BarsBadRequestResponse.cs",
-              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAMAAAABAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-06-28T17:10:02.968Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 1,
-              "Title": "BarsController.cs",
-              "DocumentMoniker": "D:\\New folder\\MarketAssetPriceAPI\\MarketAssetPriceAPI\\Controllers\\BarsController.cs",
-              "RelativeDocumentMoniker": "MarketAssetPriceAPI\\Controllers\\BarsController.cs",
-              "ToolTip": "D:\\New folder\\MarketAssetPriceAPI\\MarketAssetPriceAPI\\Controllers\\BarsController.cs",
-              "RelativeToolTip": "MarketAssetPriceAPI\\Controllers\\BarsController.cs",
-              "ViewState": "AQIAAAAAAAAAAAAAAAAAABMAAAA+AAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-06-28T16:42:53.762Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
               "DocumentIndex": 0,
-              "Title": "BarsService.cs",
-              "DocumentMoniker": "D:\\New folder\\MarketAssetPriceAPI\\MarketAssetPriceAPI\\Services\\BarsService.cs",
-              "RelativeDocumentMoniker": "MarketAssetPriceAPI\\Services\\BarsService.cs",
-              "ToolTip": "D:\\New folder\\MarketAssetPriceAPI\\MarketAssetPriceAPI\\Services\\BarsService.cs*",
-              "RelativeToolTip": "MarketAssetPriceAPI\\Services\\BarsService.cs*",
-              "ViewState": "AQIAAD0AAAAAAAAAAIAwwFMAAABkAAAA",
+              "Title": "InstrumentControllerService.cs",
+              "DocumentMoniker": "D:\\New folder\\New folder\\MarketAssetPriceAPI\\MarketAssetPriceAPI\\Data\\Services\\ControllerService\\InstrumentControllerService.cs",
+              "RelativeDocumentMoniker": "MarketAssetPriceAPI\\Data\\Services\\ControllerService\\InstrumentControllerService.cs",
+              "ToolTip": "D:\\New folder\\New folder\\MarketAssetPriceAPI\\MarketAssetPriceAPI\\Data\\Services\\ControllerService\\InstrumentControllerService.cs",
+              "RelativeToolTip": "MarketAssetPriceAPI\\Data\\Services\\ControllerService\\InstrumentControllerService.cs",
+              "ViewState": "AQIAACoAAAAAAAAAAAAQwEMAAAAJAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-06-28T16:20:05.041Z",
+              "WhenOpened": "2024-06-29T13:04:53.426Z",
               "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 6,
-              "Title": "InstrumentController.cs",
-              "DocumentMoniker": "D:\\New folder\\MarketAssetPriceAPI\\MarketAssetPriceAPI\\Controllers\\InstrumentController.cs",
-              "RelativeDocumentMoniker": "MarketAssetPriceAPI\\Controllers\\InstrumentController.cs",
-              "ToolTip": "D:\\New folder\\MarketAssetPriceAPI\\MarketAssetPriceAPI\\Controllers\\InstrumentController.cs",
-              "RelativeToolTip": "MarketAssetPriceAPI\\Controllers\\InstrumentController.cs",
-              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-06-28T16:41:48.748Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 7,
-              "Title": "AuthorizedService.cs",
-              "DocumentMoniker": "D:\\New folder\\MarketAssetPriceAPI\\MarketAssetPriceAPI\\Services\\AuthorizedService.cs",
-              "RelativeDocumentMoniker": "MarketAssetPriceAPI\\Services\\AuthorizedService.cs",
-              "ToolTip": "D:\\New folder\\MarketAssetPriceAPI\\MarketAssetPriceAPI\\Services\\AuthorizedService.cs",
-              "RelativeToolTip": "MarketAssetPriceAPI\\Services\\AuthorizedService.cs",
-              "ViewState": "AQIAAAUAAAAAAAAAAAAAwBAAAAAJAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-06-28T16:25:40.178Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 9,
-              "Title": "Program.cs",
-              "DocumentMoniker": "D:\\New folder\\MarketAssetPriceAPI\\MarketAssetPriceAPI\\Program.cs",
-              "RelativeDocumentMoniker": "MarketAssetPriceAPI\\Program.cs",
-              "ToolTip": "D:\\New folder\\MarketAssetPriceAPI\\MarketAssetPriceAPI\\Program.cs",
-              "RelativeToolTip": "MarketAssetPriceAPI\\Program.cs",
-              "ViewState": "AQIAAAAAAAAAAAAAAAAAAA8AAAAqAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-06-28T16:20:56.241Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 8,
-              "Title": "InstrumentService.cs",
-              "DocumentMoniker": "D:\\New folder\\MarketAssetPriceAPI\\MarketAssetPriceAPI\\Services\\InstrumentService.cs",
-              "RelativeDocumentMoniker": "MarketAssetPriceAPI\\Services\\InstrumentService.cs",
-              "ToolTip": "D:\\New folder\\MarketAssetPriceAPI\\MarketAssetPriceAPI\\Services\\InstrumentService.cs",
-              "RelativeToolTip": "MarketAssetPriceAPI\\Services\\InstrumentService.cs",
-              "ViewState": "AQIAABMAAAAAAAAAAAAzwDAAAAAJAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-06-28T16:20:13.139Z"
             }
           ]
         }

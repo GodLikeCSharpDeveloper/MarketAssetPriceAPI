@@ -6,14 +6,14 @@ using System.Net.Http;
 
 namespace MarketAssetPriceAPI.Data.Services
 {
-    public class TokenService(IHttpClientFactory httpClientFactory,
+    public class TokenControllerService(IHttpClientFactory httpClientFactory,
         IOptions<FintachartCredentials> credentials,
-        ILogger<TokenService> logger,
+        ILogger<TokenControllerService> logger,
         TokenResponseStore tokenResponse)
     {
         private readonly IHttpClientFactory _httpClientFactory = httpClientFactory;
         private readonly FintachartCredentials _credentials = credentials.Value;
-        private readonly ILogger<TokenService> _logger = logger;
+        private readonly ILogger<TokenControllerService> _logger = logger;
         private readonly TokenResponseStore _tokenResponse = tokenResponse;
 
         public async Task<string> GetAccessTokenAsync()

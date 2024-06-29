@@ -7,14 +7,14 @@ using System.Threading.Tasks;
 
 namespace MarketAssetPriceAPI.Data.Services
 {
-    public class WebSocketClientService : AuthorizedService
+    public class WebSocketClientControllerService : AuthorizedControllerService
     {
         private readonly ClientWebSocket _clientWebSocket;
         private Uri _webSocketUri;
-        private readonly TokenService tokenService;
+        private readonly TokenControllerService tokenService;
         private readonly CancellationTokenSource _cancellationTokenSource;
         private readonly CancellationToken _cancellationToken;
-        public WebSocketClientService(TokenService tokenService) : base(tokenService)
+        public WebSocketClientControllerService(TokenControllerService tokenService) : base(tokenService)
         {
             _clientWebSocket = new ClientWebSocket();
             this.tokenService = tokenService;
@@ -28,7 +28,7 @@ namespace MarketAssetPriceAPI.Data.Services
             _webSocketUri = new Uri($"wss://platform.fintacharts.com/api/streaming/ws/v1/realtime?token={token}");
             await _clientWebSocket.ConnectAsync(_webSocketUri, CancellationToken.None);
             Console.WriteLine("WebSocket connection started.");
-            _ = Task.Run(async () => await ReceiveDataAsync());
+            _ = Task.Run(ReceiveDataAsync);
         }
 
         public async Task SendSubscriptionAsync()

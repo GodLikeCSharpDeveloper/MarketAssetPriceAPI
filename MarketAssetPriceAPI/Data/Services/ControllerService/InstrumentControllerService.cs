@@ -11,10 +11,11 @@ using System.Diagnostics.Metrics;
 using System.Net;
 using System.Net.Http.Headers;
 using System.Text;
+using System.Web;
 
 namespace MarketAssetPriceAPI.Data.Services
 {
-    public class FintachartsService(InstrumentRepository instrumentRepository, HttpClient httpClient, TokenService tokenService, IOptions<FintachartCredentials> credentials) : AuthorizedService(tokenService)
+    public class InstrumentControllerService(InstrumentRepository instrumentRepository, HttpClient httpClient, TokenControllerService tokenService, IOptions<FintachartCredentials> credentials) : AuthorizedControllerService(tokenService)
     {
         private readonly HttpClient _httpClient = httpClient;
         private readonly FintachartCredentials _credentials = credentials.Value;
@@ -31,8 +32,8 @@ namespace MarketAssetPriceAPI.Data.Services
             }
             response.EnsureSuccessStatusCode();
             var deserializedResponse = JsonConvert.DeserializeObject<InstrumentsResponse>(await response.Content.ReadAsStringAsync());
-            var instrument = deserializedResponse.Data.FirstOrDefault();
-            await instrumentRepository.AddNewInstrument(new Models.DTOs.InstrumentDTO
+            var instrument = deserializedResponse.Instruments.FirstOrDefault();
+            await instrumentRepository.AddNewInstrument(new Models.DTOs.InstrumentEntity
             {
                 ApiProviderId = instrument.ApiProviderId,
                 BaseCurrency = instrument.BaseCurrency,
@@ -47,13 +48,16 @@ namespace MarketAssetPriceAPI.Data.Services
         }
         private string ConstructInstrumentsUrl(InstrumentQueryParameters parameters)
         {
-            var queryString = new StringBuilder($"{_credentials.BaseUrl}/api/instruments/v1/instruments?");
+            var uriBuilder = new UriBuilder(_credentials.BaseUrl);
+            string endpoint = "api/instruments/v1/instruments?";
+            uriBuilder.Path += endpoint;
+            var query = HttpUtility.ParseQueryString(uriBuilder.Query);
             if (!string.IsNullOrEmpty(parameters.Provider))
-                queryString.Append($"provider={Uri.EscapeDataString(parameters.Provider)}&");
+                query["provider"] += parameters.Provider;
             if (!string.IsNullOrEmpty(parameters.Kind))
-                queryString.Append($"kind={Uri.EscapeDataString(parameters.Kind)}&");
+                query["kind"] +=parameters.Kind));
             if (!string.IsNullOrEmpty(parameters.Symbol))
-                queryString.Append($"symbol={Uri.EscapeDataString(parameters.Symbol)}&");
+                query["kind"] += symbol ={Uri.EscapeDataString(parameters.Symbol)}&");
             if (parameters.Page != 0)
                 queryString.Append($"page={parameters.Page}&");
             if (parameters.Size != 0)

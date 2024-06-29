@@ -5,7 +5,7 @@
 namespace MarketAssetPriceAPI.Migrations
 {
     /// <inheritdoc />
-    public partial class initial : Migration
+    public partial class intiial : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -45,40 +45,48 @@ namespace MarketAssetPriceAPI.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "InstrumentProvider",
+                name: "InstrumentProviders",
                 columns: table => new
                 {
                     ProviderId = table.Column<int>(type: "INTEGER", nullable: false),
-                    InstrumentId = table.Column<int>(type: "INTEGER", nullable: false)
+                    InstrumentId = table.Column<int>(type: "INTEGER", nullable: false),
+                    Id = table.Column<int>(type: "INTEGER", nullable: false),
+                    InstrumentEntityId = table.Column<int>(type: "INTEGER", nullable: false),
+                    ProviderEntityId = table.Column<int>(type: "INTEGER", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_InstrumentProvider", x => new { x.ProviderId, x.InstrumentId });
+                    table.PrimaryKey("PK_InstrumentProviders", x => new { x.ProviderId, x.InstrumentId });
                     table.ForeignKey(
-                        name: "FK_InstrumentProvider_Instruments_InstrumentId",
-                        column: x => x.InstrumentId,
+                        name: "FK_InstrumentProviders_Instruments_InstrumentEntityId",
+                        column: x => x.InstrumentEntityId,
                         principalTable: "Instruments",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_InstrumentProvider_Providers_ProviderId",
-                        column: x => x.ProviderId,
+                        name: "FK_InstrumentProviders_Providers_ProviderEntityId",
+                        column: x => x.ProviderEntityId,
                         principalTable: "Providers",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateIndex(
-                name: "IX_InstrumentProvider_InstrumentId",
-                table: "InstrumentProvider",
-                column: "InstrumentId");
+                name: "IX_InstrumentProviders_InstrumentEntityId",
+                table: "InstrumentProviders",
+                column: "InstrumentEntityId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_InstrumentProviders_ProviderEntityId",
+                table: "InstrumentProviders",
+                column: "ProviderEntityId");
         }
 
         /// <inheritdoc />
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "InstrumentProvider");
+                name: "InstrumentProviders");
 
             migrationBuilder.DropTable(
                 name: "Instruments");

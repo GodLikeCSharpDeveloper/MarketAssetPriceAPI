@@ -1,6 +1,6 @@
 ﻿namespace MarketAssetPriceAPI.Data.Models.DTOs
 {
-    public class ProviderDTO
+    public class ProviderEntity
     {
         public int Id { get; set; }
         public string? ProviderName { get; set; }

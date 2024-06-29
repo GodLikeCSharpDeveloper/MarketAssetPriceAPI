@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace MarketAssetPriceAPI.Data.Models.Bars.QueryParameters
+namespace MarketAssetPriceAPI.Models.Bars.QueryParameters
 {
     public class BarsCountBackQueryParameters : BaseBarsQueryParameters
     {

@@ -2,11 +2,11 @@
 
 namespace MarketAssetPriceAPI.Data.Services
 {
-    public abstract class AuthorizedService
+    public abstract class AuthorizedControllerService
     {
-        private readonly TokenService _tokenService;
+        private readonly TokenControllerService _tokenService;
 
-        protected AuthorizedService(TokenService tokenService)
+        protected AuthorizedControllerService(TokenControllerService tokenService)
         {
             _tokenService = tokenService;
         }

@@ -1,6 +1,6 @@
-﻿namespace MarketAssetPriceAPI.Data.Models.Bars.QueryParameters
+﻿namespace MarketAssetPriceAPI.Models.Bars.QueryParameters
 {
-    public class BaseBarsQueryParameters
+    public class BaseBarsQueryParameters: IBarsQueryParameters
     {
         public string InstrumentId { get; set; } = string.Empty;
         public string Provider { get; set; } = string.Empty;

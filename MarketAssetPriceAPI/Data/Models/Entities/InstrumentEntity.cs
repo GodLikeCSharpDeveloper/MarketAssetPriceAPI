@@ -1,6 +1,6 @@
 ﻿namespace MarketAssetPriceAPI.Data.Models.DTOs
 {
-    public class InstrumentDTO
+    public class InstrumentEntity
     {
         public int Id { get; set; }
         public string? ApiProviderId { get; set; }

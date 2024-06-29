@@ -2,13 +2,13 @@
 using MarketAssetPriceAPI.Data.Services;
 using Microsoft.AspNetCore.Mvc;
 
-namespace MarketAssetPriceAPI.Controllers
+namespace MarketAssetPriceAPI.Data.Controllers
 {
     [ApiController]
     [Route("api/[controller]")]
-    public class WebSocketController(WebSocketClientService webSocketClientService) : ControllerBase
+    public class WebSocketController(WebSocketClientControllerService webSocketClientService) : ControllerBase
     {
-        private readonly WebSocketClientService webSocketClientService = webSocketClientService;
+        private readonly WebSocketClientControllerService webSocketClientService = webSocketClientService;
         [HttpGet("start")]
         public async Task<IActionResult> StartStreaming()
         {

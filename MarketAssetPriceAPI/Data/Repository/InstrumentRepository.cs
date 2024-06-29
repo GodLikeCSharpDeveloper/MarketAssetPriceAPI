@@ -6,7 +6,7 @@ namespace MarketAssetPriceAPI.Data.Repository
     public class InstrumentRepository(MarketDbContext marketDbContext)
     {
         private readonly MarketDbContext marketDbContext = marketDbContext;
-        public async Task<InstrumentDTO> AddNewInstrument(InstrumentDTO instrument)
+        public async Task<InstrumentEntity> AddNewInstrument(InstrumentEntity instrument)
         {
             try
             {

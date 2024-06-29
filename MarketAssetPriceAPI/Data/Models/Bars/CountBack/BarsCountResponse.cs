@@ -1,4 +1,4 @@
-﻿namespace MarketAssetPriceAPI.Data.Models.Bars.CountBack
+﻿namespace MarketAssetPriceAPI.Models.Bars
 {
     public class BarsCountResponse
     {

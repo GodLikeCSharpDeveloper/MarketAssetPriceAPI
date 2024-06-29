@@ -1,28 +1,27 @@
-﻿using MarketAssetPriceAPI.Data.Models.Bars.QueryParameters;
-using MarketAssetPriceAPI.Data.Services;
+﻿using MarketAssetPriceAPI.Models.Bars.QueryParameters;
 using Microsoft.AspNetCore.Mvc;
 
-namespace MarketAssetPriceAPI.Controllers
+namespace MarketAssetPriceAPI.Data.Controllers
 {
-    public class BarsController(BarsService barsService) : ControllerBase
+    public class BarsController(BarsControllerService barsService) : ControllerBase
     {
-        private readonly BarsService barsService = barsService;
+        private readonly BarsControllerService barsService = barsService;
         [HttpGet("list-bars")]
         public async Task<IActionResult> GetBarsCountBack([FromQuery] BarsCountBackQueryParameters parameters)
         {
-            var data = await barsService.GetBarsCountBackAsync(parameters);
+            var data = await barsService.GetBarsDataAsync(parameters);
             return Ok(data);
         }
         [HttpGet("date-range")]
         public async Task<IActionResult> GetBarsDateRange([FromQuery] BarsDateRangeQueryParameters parameters)
         {
-            var data = await barsService.GetBarsDateRangeAsync(parameters);
+            var data = await barsService.GetBarsDataAsync(parameters);
             return Ok(data);
         }
         [HttpGet("time-back")]
         public async Task<IActionResult> GetBarsDateRange([FromQuery] BarsTimeBackQueryParameters parameters)
         {
-            var data = await barsService.GetBarsTimeBackAsync(parameters);
+            var data = await barsService.GetBarsDataAsync(parameters);
             return Ok(data);
         }
     }

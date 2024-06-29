@@ -15,11 +15,11 @@ builder.Services.AddControllers();
 builder.Services.AddHttpClient();
 builder.Services.Configure<FintachartCredentials>(builder.Configuration.GetSection("FintachartCredentials"));
 builder.Services.AddSingleton<TokenResponseStore>();
-builder.Services.AddScoped<FintachartsService>();
-builder.Services.AddScoped<BarsService>();
-builder.Services.AddSingleton<WebSocketClientService>();
+builder.Services.AddScoped<InstrumentControllerService>();
+builder.Services.AddScoped<BarsControllerService>();
+builder.Services.AddSingleton<WebSocketClientControllerService>();
 builder.Services.AddScoped<InstrumentRepository>();
-builder.Services.AddSingleton<TokenService>();
+builder.Services.AddSingleton<TokenControllerService>();
 builder.Services.AddDbContext<MarketDbContext>(options =>
             options.UseSqlite(builder.Configuration.GetConnectionString("DefaultConnection")));
 builder.Services.AddEndpointsApiExplorer();

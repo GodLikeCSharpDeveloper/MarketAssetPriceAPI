@@ -17,7 +17,7 @@ namespace MarketAssetPriceAPI.Migrations
 #pragma warning disable 612, 618
             modelBuilder.HasAnnotation("ProductVersion", "8.0.6");
 
-            modelBuilder.Entity("MarketAssetPriceAPI.Data.Models.DTOs.InstrumentDTO", b =>
+            modelBuilder.Entity("MarketAssetPriceAPI.Data.Models.DTOs.InstrumentEntity", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -49,7 +49,7 @@ namespace MarketAssetPriceAPI.Migrations
                     b.ToTable("Instruments");
                 });
 
-            modelBuilder.Entity("MarketAssetPriceAPI.Data.Models.DTOs.InstrumentProviderRelation", b =>
+            modelBuilder.Entity("MarketAssetPriceAPI.Data.Models.DTOs.InstrumentProviderRelationEntity", b =>
                 {
                     b.Property<int>("ProviderId")
                         .HasColumnType("INTEGER");
@@ -57,14 +57,25 @@ namespace MarketAssetPriceAPI.Migrations
                     b.Property<int>("InstrumentId")
                         .HasColumnType("INTEGER");
 
+                    b.Property<int>("Id")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int>("InstrumentEntityId")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int>("ProviderEntityId")
+                        .HasColumnType("INTEGER");
+
                     b.HasKey("ProviderId", "InstrumentId");
 
-                    b.HasIndex("InstrumentId");
+                    b.HasIndex("InstrumentEntityId");
 
-                    b.ToTable("InstrumentProvider", (string)null);
+                    b.HasIndex("ProviderEntityId");
+
+                    b.ToTable("InstrumentProviders", (string)null);
                 });
 
-            modelBuilder.Entity("MarketAssetPriceAPI.Data.Models.DTOs.ProviderDTO", b =>
+            modelBuilder.Entity("MarketAssetPriceAPI.Data.Models.DTOs.ProviderEntity", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -84,29 +95,19 @@ namespace MarketAssetPriceAPI.Migrations
                     b.ToTable("Providers");
                 });
 
-            modelBuilder.Entity("MarketAssetPriceAPI.Data.Models.DTOs.InstrumentProviderRelation", b =>
+            modelBuilder.Entity("MarketAssetPriceAPI.Data.Models.DTOs.InstrumentProviderRelationEntity", b =>
                 {
-                    b.HasOne("MarketAssetPriceAPI.Data.Models.DTOs.InstrumentDTO", null)
-                        .WithMany("InstrumentProviders")
-                        .HasForeignKey("InstrumentId")
+                    b.HasOne("MarketAssetPriceAPI.Data.Models.DTOs.InstrumentEntity", null)
+                        .WithMany()
+                        .HasForeignKey("InstrumentEntityId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("MarketAssetPriceAPI.Data.Models.DTOs.ProviderDTO", null)
-                        .WithMany("InstrumentProviders")
-                        .HasForeignKey("ProviderId")
+                    b.HasOne("MarketAssetPriceAPI.Data.Models.DTOs.ProviderEntity", null)
+                        .WithMany()
+                        .HasForeignKey("ProviderEntityId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-                });
-
-            modelBuilder.Entity("MarketAssetPriceAPI.Data.Models.DTOs.InstrumentDTO", b =>
-                {
-                    b.Navigation("InstrumentProviders");
-                });
-
-            modelBuilder.Entity("MarketAssetPriceAPI.Data.Models.DTOs.ProviderDTO", b =>
-                {
-                    b.Navigation("InstrumentProviders");
                 });
 #pragma warning restore 612, 618
         }

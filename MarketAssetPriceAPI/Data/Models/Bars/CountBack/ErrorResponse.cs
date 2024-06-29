@@ -1,6 +1,6 @@
 ﻿using Newtonsoft.Json;
 
-namespace MarketAssetPriceAPI.Data.Models.Bars.CountBack
+namespace MarketAssetPriceAPI.Models.Bars
 {
     public class ErrorResponse
     {
