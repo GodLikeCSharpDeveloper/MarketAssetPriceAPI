@@ -132,5 +132,72 @@ namespace MarketAssetPriceApiTest
             _mockProviderService.Verify(s => s.AddNewProviders(It.IsAny<List<ProviderEntity>>()), Times.Exactly(instruments.Count));
             _mockInstrumentProviderService.Verify(s => s.AddNewInstrumentProviders(It.IsAny<List<InstrumentProviderRelationEntity>>()), Times.Exactly(instruments.Count));
         }
+        [Test]
+        public async Task AddOrUpdateNewInstruments_AddsAndUpdatesInstruments()
+        {
+            // Arrange
+            var instruments = new List<Instrument>
+            {
+                new Instrument { ApiProviderId = "1", Symbol = "SYM1" },
+                new Instrument { ApiProviderId = "2", Symbol = "SYM2" }
+            };
+
+            var instrumentEntities = new List<InstrumentEntity>
+            {
+                new InstrumentEntity { ApiProviderId = "1", Symbol = "SYM1" },
+                new InstrumentEntity { ApiProviderId = "2", Symbol = "SYM2" }
+            };
+
+            var existingInstruments = new List<InstrumentEntity>
+            {
+                new InstrumentEntity { ApiProviderId = "1", Symbol = "SYM3" }
+            };
+
+            _mockInstrumentRepository.Setup(repo => repo.GetInstrumentsByApiProviderIds(It.IsAny<List<string>>()))
+                .ReturnsAsync(existingInstruments);
+
+            _mockInstrumentRepository.Setup(repo => repo.AddNewInstruments(It.IsAny<List<InstrumentEntity>>()))
+                .ReturnsAsync((List<InstrumentEntity> entities) => entities);
+
+            _mockInstrumentRepository.Setup(repo => repo.UpdateInstruments(It.IsAny<List<InstrumentEntity>>()))
+                .ReturnsAsync((List<InstrumentEntity> entities) => entities);
+
+            // Act
+            await _instrumentService.AddOrUpdateNewInstruments(instruments);
+
+            // Assert
+            _mockInstrumentRepository.Verify(repo => repo.GetInstrumentsByApiProviderIds(It.IsAny<List<string>>()), Times.Once);
+            _mockInstrumentRepository.Verify(repo => repo.AddNewInstruments(It.IsAny<List<InstrumentEntity>>()), Times.Once);
+            _mockInstrumentRepository.Verify(repo => repo.UpdateInstruments(It.IsAny<List<InstrumentEntity>>()), Times.Once);
+            _mockInstrumentProviderService.Verify(service => service.UpdateInstrumentProvidersRelations(It.IsAny<List<InstrumentProviderRelationEntity>>()), Times.Once);
+        }
+
+        [Test]
+        public async Task UpdateInstruments_UpdatesExistingInstruments()
+        {
+            // Arrange
+            var existingInstruments = new List<InstrumentEntity>
+            {
+                new InstrumentEntity { ApiProviderId = "1", Symbol = "SYM1", Providers = new List<ProviderEntity> { new ProviderEntity { Id = 1 } } },
+                new InstrumentEntity { ApiProviderId = "2", Symbol = "SYM2", Providers = new List<ProviderEntity> { new ProviderEntity { Id = 2 } } }
+            };
+
+            var instrumentsToUpdate = new List<InstrumentEntity>
+            {
+                new InstrumentEntity { ApiProviderId = "1", Symbol = "NEW_SYM1", Providers = new List<ProviderEntity> { new ProviderEntity { Id = 3 } } },
+                new InstrumentEntity { ApiProviderId = "2", Symbol = "NEW_SYM2", Providers = new List<ProviderEntity> { new ProviderEntity { Id = 4 } } }
+            };
+
+            _mockInstrumentRepository.Setup(repo => repo.UpdateInstruments(It.IsAny<List<InstrumentEntity>>()))
+                .ReturnsAsync((List<InstrumentEntity> entities) => entities);
+
+            // Act
+            await _instrumentService.UpdateInstruments(existingInstruments, instrumentsToUpdate);
+
+            // Assert
+            _mockInstrumentRepository.Verify(repo => repo.UpdateInstruments(It.IsAny<List<InstrumentEntity>>()), Times.Once);
+            _mockInstrumentProviderService.Verify(service => service.UpdateInstrumentProvidersRelations(It.IsAny<List<InstrumentProviderRelationEntity>>()), Times.Once);
+        }
     }
+
 }

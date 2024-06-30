@@ -54,10 +54,10 @@ namespace MarketAssetPriceApiTest
         {
             // Arrange
             var instrumentProviders = new List<InstrumentProviderRelationEntity>
-        {
-            new InstrumentProviderRelationEntity { ProviderId = 1, InstrumentId = 1 },
-            new InstrumentProviderRelationEntity { ProviderId = 2, InstrumentId = 2 }
-        };
+            {
+                new InstrumentProviderRelationEntity { ProviderId = 1, InstrumentId = 1 },
+                new InstrumentProviderRelationEntity { ProviderId = 2, InstrumentId = 2 }
+            };
 
             // Act
             await _instrumentProviderService.AddNewInstrumentProviders(instrumentProviders);
@@ -71,10 +71,10 @@ namespace MarketAssetPriceApiTest
         {
             // Arrange
             var instrumentProviders = new List<InstrumentProviderRelationEntity>
-        {
-            new InstrumentProviderRelationEntity { ProviderId = 0, InstrumentId = 1 },
-            new InstrumentProviderRelationEntity { ProviderId = 2, InstrumentId = 0 }
-        };
+            {
+                new InstrumentProviderRelationEntity { ProviderId = 0, InstrumentId = 1 },
+                new InstrumentProviderRelationEntity { ProviderId = 2, InstrumentId = 0 }
+            };
 
             // Act
             await _instrumentProviderService.AddNewInstrumentProviders(instrumentProviders);

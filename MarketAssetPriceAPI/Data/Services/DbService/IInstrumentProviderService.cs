@@ -7,5 +7,6 @@ namespace MarketAssetPriceAPI.Data.Services.DbService
     {
         public Task AddNewInstrumentProvider(InstrumentProviderRelationEntity instrumentProvider);
         public Task AddNewInstrumentProviders(List<InstrumentProviderRelationEntity> instrumentProviders);
+        public Task UpdateInstrumentProvidersRelations(List<InstrumentProviderRelationEntity> instrumentProviders);
     }
 }

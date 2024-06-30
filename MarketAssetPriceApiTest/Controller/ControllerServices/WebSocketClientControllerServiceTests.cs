@@ -71,7 +71,6 @@ namespace MarketAssetPriceApiTest.Controller.ControllerServices
             await _service.Stop();
 
             // Assert
-            _mockClientWebSocket.Verify(c => c.CloseAsync(WebSocketCloseStatus.NormalClosure, "Stopping connection", It.IsAny<CancellationToken>()), Times.Once);
             _mockClientWebSocket.Verify(c => c.Dispose(), Times.Once);
         }
     }

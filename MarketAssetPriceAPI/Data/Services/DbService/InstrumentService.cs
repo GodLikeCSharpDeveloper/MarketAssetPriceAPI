@@ -6,7 +6,7 @@ using MarketAssetPriceAPI.Data.Services.MapperService;
 
 namespace MarketAssetPriceAPI.Data.Services.DbService
 {
-    public class InstrumentService(IInstrumentRepository instrumentRepository, 
+    public class InstrumentService(IInstrumentRepository instrumentRepository,
         IProviderService providerService,
         IInstrumentProviderService instrumentProviderService,
         IExchangeService exchangeService) : IInstrumentService
@@ -62,7 +62,55 @@ namespace MarketAssetPriceAPI.Data.Services.DbService
 
         private List<InstrumentProviderRelationEntity> MakeNewInstrumentProviderEntities(List<ProviderEntity> providers, int instrumentId)
         {
-            return providers.Select(provider => new InstrumentProviderRelationEntity { InstrumentId = instrumentId, ProviderId = provider.Id }).ToList();
+            if (providers != null)
+                return providers.Select(provider => new InstrumentProviderRelationEntity { InstrumentId = instrumentId, ProviderId = provider.Id }).ToList();
+            return [];
+        }
+        public async Task AddOrUpdateNewInstruments(List<Instrument> instruments)
+        {
+            var instrumentEntities = ConvertInstrumentsToEntities(instruments);
+            var apiProviderIds = instrumentEntities.Select(d => d.ApiProviderId).ToList();
+            var existingInstruments = await instrumentRepository.GetInstrumentsByApiProviderIds(apiProviderIds);
+
+            var instrumentsToAdd = instrumentEntities.Where(i => !existingInstruments.Any(d => d.ApiProviderId == i.ApiProviderId)).ToList();
+            var instrumentsToUpdate = instrumentEntities.Where(i => existingInstruments.Any(d => d.ApiProviderId == i.ApiProviderId)).ToList();
+
+            if (instrumentsToAdd.Count != 0)
+            {
+                var addedInstruments = await instrumentRepository.AddNewInstruments(instrumentsToAdd);
+                await HandleInstrumentRelations(addedInstruments);
+            }
+
+            if (instrumentsToUpdate.Count != 0)
+            {
+                await UpdateInstruments(existingInstruments, instrumentsToUpdate);
+                await HandleInstrumentRelations(instrumentsToUpdate);
+            }
+        }
+        public async Task UpdateInstruments(List<InstrumentEntity> existingInstruments, List<InstrumentEntity> instrumentToUpdate)
+        {
+            var instrumentProvider = new List<InstrumentProviderRelationEntity>();
+            foreach (var instrument in instrumentToUpdate)
+            {
+                var existingInstrument = existingInstruments.FirstOrDefault(i => i.ApiProviderId == instrument.ApiProviderId);
+                if (existingInstrument != null)
+                {
+                    existingInstrument.Symbol = instrument.Symbol;
+                    existingInstrument.Kind = instrument.Kind;
+                    existingInstrument.Description = instrument.Description;
+                    existingInstrument.TickSize = instrument.TickSize;
+                    existingInstrument.Currency = instrument.Currency;
+                    existingInstrument.BaseCurrency = instrument.BaseCurrency;
+                    if (existingInstrument.Providers != null)
+                    {
+                        if (existingInstrument.Providers.Count == 0)
+                            instrumentProvider.Add(new() { ProviderId = existingInstrument.Id });
+                        existingInstrument.Providers.ForEach(p => instrumentProvider.Add(new() { InstrumentId = existingInstrument.Id, ProviderId = p.Id }));
+                    }
+                }
+            }
+            await instrumentProviderService.UpdateInstrumentProvidersRelations(instrumentProvider);
+            await instrumentRepository.UpdateInstruments(existingInstruments);
         }
     }
 }

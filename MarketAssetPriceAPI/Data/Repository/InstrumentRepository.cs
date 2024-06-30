@@ -25,6 +25,18 @@ namespace MarketAssetPriceAPI.Data.Repository
                 .Where(i => apiProviderIds.Contains(i.ApiProviderId))
                 .ToListAsync();
         }
+        public async Task<InstrumentEntity> UpdateInstrument(InstrumentEntity instrument)
+        {
+            marketDbContext.Update(instrument);
+            await SaveChangesAsync();
+            return instrument;
+        }
+        public async Task<List<InstrumentEntity>> UpdateInstruments(List<InstrumentEntity> instruments)
+        {
+            marketDbContext.UpdateRange(instruments);
+            await SaveChangesAsync();
+            return instruments;
+        }
         public async Task SaveChangesAsync()
         {
             await marketDbContext.SaveChangesAsync();
