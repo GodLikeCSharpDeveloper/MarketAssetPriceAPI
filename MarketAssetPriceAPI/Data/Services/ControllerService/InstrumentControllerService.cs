@@ -34,7 +34,7 @@ namespace MarketAssetPriceAPI.Data.Services.ControllerService
                 }
                 response.EnsureSuccessStatusCode();
                 var deserializedResponse = JsonConvert.DeserializeObject<InstrumentsResponse>(await response.Content.ReadAsStringAsync());
-                await instrumentService.AddNewInstruments(deserializedResponse.Instruments);
+                await instrumentService.AddOrUpdateNewInstruments(deserializedResponse.Instruments);
                 return deserializedResponse;
             }
             catch (Exception ex)

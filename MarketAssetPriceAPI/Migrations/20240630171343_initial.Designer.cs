@@ -11,8 +11,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace MarketAssetPriceAPI.Migrations
 {
     [DbContext(typeof(MarketDbContext))]
-    [Migration("20240630093244_jjee2")]
-    partial class jjee2
+    [Migration("20240630171343_initial")]
+    partial class initial
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -54,6 +54,9 @@ namespace MarketAssetPriceAPI.Migrations
                         .HasColumnType("TEXT");
 
                     b.Property<string>("Kind")
+                        .HasColumnType("TEXT");
+
+                    b.Property<DateTime>("LastUpdateTime")
                         .HasColumnType("TEXT");
 
                     b.Property<string>("Symbol")

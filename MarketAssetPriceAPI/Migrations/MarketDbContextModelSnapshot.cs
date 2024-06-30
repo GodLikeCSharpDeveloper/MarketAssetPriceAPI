@@ -53,6 +53,9 @@ namespace MarketAssetPriceAPI.Migrations
                     b.Property<string>("Kind")
                         .HasColumnType("TEXT");
 
+                    b.Property<DateTime>("LastUpdateTime")
+                        .HasColumnType("TEXT");
+
                     b.Property<string>("Symbol")
                         .HasColumnType("TEXT");
 

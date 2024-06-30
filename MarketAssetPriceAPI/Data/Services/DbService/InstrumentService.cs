@@ -101,6 +101,7 @@ namespace MarketAssetPriceAPI.Data.Services.DbService
                     existingInstrument.TickSize = instrument.TickSize;
                     existingInstrument.Currency = instrument.Currency;
                     existingInstrument.BaseCurrency = instrument.BaseCurrency;
+                    existingInstrument.LastUpdateTime = instrument.LastUpdateTime;
                     if (existingInstrument.Providers != null)
                     {
                         if (existingInstrument.Providers.Count == 0)

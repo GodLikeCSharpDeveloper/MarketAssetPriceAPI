@@ -1,11 +1,12 @@
-﻿using Microsoft.EntityFrameworkCore.Migrations;
+﻿using System;
+using Microsoft.EntityFrameworkCore.Migrations;
 
 #nullable disable
 
 namespace MarketAssetPriceAPI.Migrations
 {
     /// <inheritdoc />
-    public partial class jjee2 : Migration
+    public partial class initial : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -35,7 +36,8 @@ namespace MarketAssetPriceAPI.Migrations
                     Description = table.Column<string>(type: "TEXT", nullable: true),
                     TickSize = table.Column<double>(type: "REAL", nullable: true),
                     Currency = table.Column<string>(type: "TEXT", nullable: true),
-                    BaseCurrency = table.Column<string>(type: "TEXT", nullable: true)
+                    BaseCurrency = table.Column<string>(type: "TEXT", nullable: true),
+                    LastUpdateTime = table.Column<DateTime>(type: "TEXT", nullable: false)
                 },
                 constraints: table =>
                 {

@@ -17,6 +17,7 @@ namespace MarketAssetPriceAPI.Data.Services.MapperService
             .ForMember(dest => dest.TickSize, opt => opt.MapFrom(src => (double?)src.TickSize))
             .ForMember(dest => dest.Currency, opt => opt.MapFrom(src => src.Currency))
             .ForMember(dest => dest.BaseCurrency, opt => opt.MapFrom(src => src.BaseCurrency))
+            .ForMember(dest => dest.LastUpdateTime, opt => opt.MapFrom(src => src.LastUpdateTime))
             .ForMember(dest => dest.Providers, opt => opt.MapFrom(src => src.Mappings != null ? src.Mappings.Select(m => new ProviderEntity
             {
                 DefaultOrderSize = m.Value.DefaultOrderSize,
