@@ -23,17 +23,25 @@ namespace MarketAssetPriceAPI.Data.Services.ControllerService
 
         public async Task<InstrumentsResponse> GetInstruments(InstrumentQueryParameters parameters)
         {
-            await SetAuthorizationHeaderAsync(_httpClient);
-            var response = await _httpClient.GetAsync(ConstructInstrumentsUrl(parameters));
-            if (response.StatusCode == HttpStatusCode.Unauthorized)
+            try
             {
-                await ReinitializeAuthorizationAsync(_httpClient);
-                response = await _httpClient.GetAsync(ConstructInstrumentsUrl(parameters));
+                await SetAuthorizationHeaderAsync(_httpClient);
+                var response = await _httpClient.GetAsync(ConstructInstrumentsUrl(parameters));
+                if (response.StatusCode == HttpStatusCode.Unauthorized)
+                {
+                    await ReinitializeAuthorizationAsync(_httpClient);
+                    response = await _httpClient.GetAsync(ConstructInstrumentsUrl(parameters));
+                }
+                response.EnsureSuccessStatusCode();
+                var deserializedResponse = JsonConvert.DeserializeObject<InstrumentsResponse>(await response.Content.ReadAsStringAsync());
+                await instrumentService.AddNewInstruments(deserializedResponse.Instruments);
+                return deserializedResponse;
             }
-            response.EnsureSuccessStatusCode();
-            var deserializedResponse = JsonConvert.DeserializeObject<InstrumentsResponse>(await response.Content.ReadAsStringAsync());
-            await instrumentService.AddNewInstruments(deserializedResponse.Instruments);
-            return deserializedResponse;
+            catch (Exception ex)
+            {
+                return null;
+            }
+
         }
         private string ConstructInstrumentsUrl(InstrumentQueryParameters parameters)
         {
@@ -57,16 +65,23 @@ namespace MarketAssetPriceAPI.Data.Services.ControllerService
         }
         public async Task<ExchangeResponse> GetExchanges(ExchangesQueryParameters parameters)
         {
-            await SetAuthorizationHeaderAsync(_httpClient);
-            var response = await _httpClient.GetAsync(ConstructExchangesUrl(parameters));
-            if (response.StatusCode == HttpStatusCode.Unauthorized)
+            try
             {
-                await ReinitializeAuthorizationAsync(_httpClient);
-                response = await _httpClient.GetAsync(ConstructExchangesUrl(parameters));
+                await SetAuthorizationHeaderAsync(_httpClient);
+                var response = await _httpClient.GetAsync(ConstructExchangesUrl(parameters));
+                if (response.StatusCode == HttpStatusCode.Unauthorized)
+                {
+                    await ReinitializeAuthorizationAsync(_httpClient);
+                    response = await _httpClient.GetAsync(ConstructExchangesUrl(parameters));
+                }
+                response.EnsureSuccessStatusCode();
+                var deserializedResponse = JsonConvert.DeserializeObject<ExchangeResponse>(await response.Content.ReadAsStringAsync());
+                return deserializedResponse;
             }
-            response.EnsureSuccessStatusCode();
-            var deserializedResponse = JsonConvert.DeserializeObject<ExchangeResponse>(await response.Content.ReadAsStringAsync());
-            return deserializedResponse;
+            catch (Exception ex)
+            {
+                return null;
+            }
         }
         private string ConstructExchangesUrl(ExchangesQueryParameters parameters)
         {
@@ -80,16 +95,24 @@ namespace MarketAssetPriceAPI.Data.Services.ControllerService
         }
         public async Task<Providers> GetProviders()
         {
-            await SetAuthorizationHeaderAsync(_httpClient);
-            var response = await _httpClient.GetAsync($"{_credentials.BaseUrl}/api/instruments/v1/providers");
-            if (response.StatusCode == HttpStatusCode.Unauthorized)
+            try
             {
-                await ReinitializeAuthorizationAsync(_httpClient);
-                response = await _httpClient.GetAsync($"{_credentials.BaseUrl}/api/instruments/v1/providers");
+                await SetAuthorizationHeaderAsync(_httpClient);
+                var response = await _httpClient.GetAsync($"{_credentials.BaseUrl}/api/instruments/v1/providers");
+                if (response.StatusCode == HttpStatusCode.Unauthorized)
+                {
+                    await ReinitializeAuthorizationAsync(_httpClient);
+                    response = await _httpClient.GetAsync($"{_credentials.BaseUrl}/api/instruments/v1/providers");
+                }
+                response.EnsureSuccessStatusCode();
+                var deserializedResponse = JsonConvert.DeserializeObject<Providers>(await response.Content.ReadAsStringAsync());
+                return deserializedResponse;
             }
-            response.EnsureSuccessStatusCode();
-            var deserializedResponse = JsonConvert.DeserializeObject<Providers>(await response.Content.ReadAsStringAsync());
-            return deserializedResponse;
+            catch (Exception ex)
+            {
+                return null;
+            }
+
         }
     }
 }

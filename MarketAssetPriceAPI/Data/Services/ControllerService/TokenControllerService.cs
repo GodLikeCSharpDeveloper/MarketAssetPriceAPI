@@ -23,6 +23,11 @@ namespace MarketAssetPriceAPI.Data.Services.ControllerService
             return _tokenResponse.AccessToken;
         }
 
+        public bool IsTokenExpired(string token)
+        {
+            return token.IsTokenExpired();
+        }
+
         public async Task ReinitializeAuthorization()
         {
             var client = _httpClientFactory.CreateClient();
@@ -31,11 +36,6 @@ namespace MarketAssetPriceAPI.Data.Services.ControllerService
             if (!response.IsSuccessStatusCode)
                 response.EnsureSuccessStatusCode();
             await HandleResponseResult(response);
-        }
-
-        private bool IsTokenExpired(string accessToken)
-        {
-            return accessToken.IsTokenExpired();
         }
 
         private async Task RefreshTokenAsync()

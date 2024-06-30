@@ -23,6 +23,7 @@ builder.Services.AddScoped<IInstrumentRepository, InstrumentRepository>();
 builder.Services.AddScoped<IInstrumentService, InstrumentService>();
 builder.Services.AddScoped<IProviderRepository, ProviderRepository>();
 builder.Services.AddScoped<IProviderService, ProviderService>();
+builder.Services.AddSingleton<IClientWebSocket, ClientWebSocketWrapper>();
 builder.Services.AddScoped<IInstrumentProviderRepository, InstrumentProviderRepository>();
 builder.Services.AddScoped<IInstrumentProviderService, InstrumentProviderService>();
 builder.Services.AddSingleton<ITokenControllerService, TokenControllerService>();

@@ -9,14 +9,14 @@ namespace MarketAssetPriceAPI.Data.Services.ControllerService
 {
     public class WebSocketClientControllerService : AuthorizedControllerService, IWebSocketClientControllerService
     {
-        private readonly ClientWebSocket _clientWebSocket;
+        private readonly IClientWebSocket _clientWebSocket;
         private Uri _webSocketUri;
         private readonly ITokenControllerService tokenService;
         private readonly CancellationTokenSource _cancellationTokenSource;
         private readonly CancellationToken _cancellationToken;
-        public WebSocketClientControllerService(ITokenControllerService tokenService) : base(tokenService)
+        public WebSocketClientControllerService(ITokenControllerService tokenService, IClientWebSocket clientWebSocket) : base(tokenService)
         {
-            _clientWebSocket = new ClientWebSocket();
+            _clientWebSocket = clientWebSocket;
             this.tokenService = tokenService;
             _cancellationTokenSource = new CancellationTokenSource();
             _cancellationToken = _cancellationTokenSource.Token;
@@ -67,7 +67,6 @@ namespace MarketAssetPriceAPI.Data.Services.ControllerService
                 {
                     var message = Encoding.UTF8.GetString(buffer, 0, result.Count);
                     Console.WriteLine($"Received: {message}");
-                    // Process message
                 }
             }
         }

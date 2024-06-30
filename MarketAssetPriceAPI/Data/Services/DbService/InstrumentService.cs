@@ -1,4 +1,5 @@
 ﻿using MarketAssetPriceAPI.Data.Models.ApiProviderModels.Instruments;
+using MarketAssetPriceAPI.Data.Models.ApiProviderModels.Providers;
 using MarketAssetPriceAPI.Data.Models.Entities;
 using MarketAssetPriceAPI.Data.Repository;
 using MarketAssetPriceAPI.Data.Services.MapperService;
@@ -19,24 +20,49 @@ namespace MarketAssetPriceAPI.Data.Services.DbService
             var instrumentEntity = InstrumentMapper.MapInstrumentEntity(instrument);
             var providers = await providerService.AddNewProviders(instrumentEntity.Providers);
             await instrumentRepository.AddNewInstrument(instrumentEntity);
-            var instrumentProviders = new List<InstrumentProviderRelationEntity>();
-            foreach (var provider in providers)
-                instrumentProviders.Add(new InstrumentProviderRelationEntity() { InstrumentId = instrumentEntity.Id, ProviderId = provider.Id });
+            var instrumentProviders = MakeNewInstrumentProviderEntities(providers, instrumentEntity.Id);
             await instrumentProviderService.AddNewInstrumentProviders(instrumentProviders);
         }
+
         public async Task AddNewInstruments(List<Instrument> instruments)
         {
-            var instrumentEntities = new List<InstrumentEntity>();
-            instruments.ForEach(inst => instrumentEntities.Add(InstrumentMapper.MapInstrumentEntity(inst)));
+            var instrumentEntities = ConvertInstrumentsToEntities(instruments);
             instrumentEntities = await instrumentRepository.AddNewInstruments(instrumentEntities);
-            var instrumentProviders = new List<InstrumentProviderRelationEntity>();
-            instrumentEntities.ForEach(async (ent) =>
+            await HandleInstrumentRelations(instrumentEntities);
+        }
+
+        private List<InstrumentEntity> ConvertInstrumentsToEntities(List<Instrument> instruments)
+        {
+            return instruments.Select(InstrumentMapper.MapInstrumentEntity).ToList();
+        }
+
+        private async Task HandleInstrumentRelations(List<InstrumentEntity> instruments)
+        {
+            var tasks = new List<Task>();
+
+            foreach (var ent in instruments)
             {
-                ent.Providers.ForEach(async (pr) => pr.ExchangeId = (await exchangeService.GetOrAddExchangeEntity(new() { ExchangeName = pr.Exchange })).Id);
-                ent.Providers = await providerService.AddNewProviders(ent.Providers);                          
-                ent.Providers.ForEach(provider => { instrumentProviders.Add(new() { InstrumentId = ent.Id, ProviderId = provider.Id }); });
-            });
+                tasks.Add(HandleSingleInstrumentRelation(ent));
+            }
+
+            await Task.WhenAll(tasks);
+        }
+
+        private async Task HandleSingleInstrumentRelation(InstrumentEntity ent)
+        {
+            foreach (var provider in ent.Providers)
+            {
+                provider.ExchangeId = (await exchangeService.GetOrAddExchangeEntity(new ExchangeEntity { ExchangeName = provider.Exchange })).Id;
+            }
+
+            ent.Providers = await providerService.AddNewProviders(ent.Providers);
+            var instrumentProviders = MakeNewInstrumentProviderEntities(ent.Providers, ent.Id);
             await instrumentProviderService.AddNewInstrumentProviders(instrumentProviders);
+        }
+
+        private List<InstrumentProviderRelationEntity> MakeNewInstrumentProviderEntities(List<ProviderEntity> providers, int instrumentId)
+        {
+            return providers.Select(provider => new InstrumentProviderRelationEntity { InstrumentId = instrumentId, ProviderId = provider.Id }).ToList();
         }
     }
 }

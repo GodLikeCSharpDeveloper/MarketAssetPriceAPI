@@ -6,5 +6,6 @@ namespace MarketAssetPriceAPI.Data.Services.ControllerService
     {
         public Task<string> GetAccessToken();
         public Task ReinitializeAuthorization();
+        public bool IsTokenExpired(string token);
     }
 }

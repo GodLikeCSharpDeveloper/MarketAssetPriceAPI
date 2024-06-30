@@ -18,17 +18,25 @@ public class BarsControllerService(HttpClient httpClient, IOptions<FintachartCre
 
     public async Task<BarsApiResponse> GetBarsData(IBarsQueryParameters queryParams)
     {
-        await SetAuthorizationHeaderAsync(_httpClient);
-        var response = await _httpClient.GetAsync(BuildBarsQuery(queryParams));
-
-        if (response.StatusCode == HttpStatusCode.Unauthorized)
+        try
         {
-            await ReinitializeAuthorizationAsync(_httpClient);
-            response = await _httpClient.GetAsync(BuildBarsQuery(queryParams));
+            await SetAuthorizationHeaderAsync(_httpClient);
+            var response = await _httpClient.GetAsync(BuildBarsQuery(queryParams));
+
+            if (response.StatusCode == HttpStatusCode.Unauthorized)
+            {
+                await ReinitializeAuthorizationAsync(_httpClient);
+                response = await _httpClient.GetAsync(BuildBarsQuery(queryParams));
+            }
+            if (response.StatusCode == HttpStatusCode.BadRequest || response.StatusCode == HttpStatusCode.NotFound)
+                return await ErrorResponseHandler(response);
+            return await SuccessResponseHandler(response);
         }
-        if (response.StatusCode == HttpStatusCode.BadRequest || response.StatusCode == HttpStatusCode.NotFound)
-            return await ErrorResponseHandler(response);
-        return await SuccessResponseHandler(response);
+        catch (Exception ex)
+        {
+            return null;
+        }
+
     }
 
     private async Task<BarsApiResponse> ErrorResponseHandler(HttpResponseMessage response)
@@ -105,13 +113,5 @@ public class BarsControllerService(HttpClient httpClient, IOptions<FintachartCre
                 break;
         }
         return uriBuilder;
-    }
-
-    private string ConstructResultURL(StringBuilder queryString)
-    {
-        if (queryString[queryString.Length - 1] == '&')
-            queryString.Length--;
-        var resultString = queryString.ToString();
-        return resultString;
     }
 }

@@ -14,37 +14,12 @@ namespace MarketAssetPriceApiTest
     [TestFixture]
     internal class TokenExtensionsTests
     {
-            public static byte[] GenerateBase64EncodedKey(int size = 32)
-            {
-                using (var rng = new RNGCryptoServiceProvider())
-                {
-                    byte[] key = new byte[size];
-                    rng.GetBytes(key);
-                    return key;
-                }
-            }
-        private static string GenerateTokenForTests(DateTime expiration)
-        {
-            var claims = new[]
-            {
-                new Claim(JwtRegisteredClaimNames.Exp, new DateTimeOffset(expiration).ToUnixTimeSeconds().ToString())
-            };
-
-            var key = new SymmetricSecurityKey(GenerateBase64EncodedKey());
-            var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
-
-            var token = new JwtSecurityToken(
-                claims: claims,
-                expires: expiration,
-                signingCredentials: creds);
-
-            return new JwtSecurityTokenHandler().WriteToken(token);
-        }
+ 
         [Test]
         public void IsTokenExpired_ValidTokenNotExpired_ReturnsFalse()
         {
             // Arrange
-            var token = GenerateTokenForTests(DateTime.UtcNow.AddMinutes(10));
+            var token = TokenTestGenerator.GenerateTokenForTests(DateTime.UtcNow.AddMinutes(10));
 
             // Act
             var result = token.IsTokenExpired();
@@ -57,7 +32,7 @@ namespace MarketAssetPriceApiTest
         public void IsTokenExpired_ValidTokenExpired_ReturnsTrue()
         {
             // Arrange
-            var token = GenerateTokenForTests(DateTime.UtcNow.AddMinutes(-10));
+            var token = TokenTestGenerator.GenerateTokenForTests(DateTime.UtcNow.AddMinutes(-10));
 
             // Act
             var result = token.IsTokenExpired();
