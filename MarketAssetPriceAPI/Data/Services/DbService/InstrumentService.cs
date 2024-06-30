@@ -1,5 +1,5 @@
 ﻿using MarketAssetPriceAPI.Data.Models.ApiProviderModels.Instruments;
-using MarketAssetPriceAPI.Data.Models.DTOs;
+using MarketAssetPriceAPI.Data.Models.Entities;
 using MarketAssetPriceAPI.Data.Repository;
 using MarketAssetPriceAPI.Data.Services.MapperService;
 

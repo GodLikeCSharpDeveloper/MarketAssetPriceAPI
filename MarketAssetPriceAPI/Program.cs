@@ -1,6 +1,5 @@
 using MarketAssetPriceAPI.Data.Models.ApiProviderModels.ConnectionModels;
 using MarketAssetPriceAPI.Data.Repository;
-using MarketAssetPriceAPI.Data.Services;
 using MarketAssetPriceAPI.Data.Services.ControllerService;
 using MarketAssetPriceAPI.Data.Services.DbService;
 using Microsoft.EntityFrameworkCore;

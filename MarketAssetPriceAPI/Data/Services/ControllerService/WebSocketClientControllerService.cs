@@ -1,12 +1,11 @@
-﻿using MarketAssetPriceAPI.Data.Services.ControllerService;
-using System;
+﻿using System;
 using System.Net.WebSockets;
 using System.Text;
 using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace MarketAssetPriceAPI.Data.Services
+namespace MarketAssetPriceAPI.Data.Services.ControllerService
 {
     public class WebSocketClientControllerService : AuthorizedControllerService, IWebSocketClientControllerService
     {
@@ -59,7 +58,7 @@ namespace MarketAssetPriceAPI.Data.Services
             {
                 var result = await _clientWebSocket.ReceiveAsync(new ArraySegment<byte>(buffer), CancellationToken.None);
 
-                if (result.MessageType == WebSocketMessageType.Close|| _cancellationToken.IsCancellationRequested)
+                if (result.MessageType == WebSocketMessageType.Close || _cancellationToken.IsCancellationRequested)
                 {
                     await _clientWebSocket.CloseAsync(WebSocketCloseStatus.NormalClosure, string.Empty, CancellationToken.None);
                     Console.WriteLine("WebSocket connection closed.");

@@ -4,6 +4,7 @@ namespace MarketAssetPriceAPI.Data.Extensions.Tokens
 {
     public static class TokenExtensions
     {
+
         public static bool IsTokenExpired(this string token)
         {
             var jwtToken = new JwtSecurityTokenHandler().ReadToken(token) as JwtSecurityToken ??

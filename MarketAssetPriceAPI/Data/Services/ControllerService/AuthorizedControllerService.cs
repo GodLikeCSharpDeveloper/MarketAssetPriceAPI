@@ -1,7 +1,6 @@
-﻿using MarketAssetPriceAPI.Data.Services.ControllerService;
-using System.Net.Http.Headers;
+﻿using System.Net.Http.Headers;
 
-namespace MarketAssetPriceAPI.Data.Services
+namespace MarketAssetPriceAPI.Data.Services.ControllerService
 {
     public abstract class AuthorizedControllerService(ITokenControllerService tokenService)
     {

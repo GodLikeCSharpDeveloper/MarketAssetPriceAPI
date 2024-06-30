@@ -2,9 +2,6 @@
 using MarketAssetPriceAPI.Data.Models.ApiProviderModels.Exchanges;
 using MarketAssetPriceAPI.Data.Models.ApiProviderModels.Instruments;
 using MarketAssetPriceAPI.Data.Models.ApiProviderModels.Providers;
-using MarketAssetPriceAPI.Data.Models.DTOs;
-using MarketAssetPriceAPI.Data.Repository;
-using MarketAssetPriceAPI.Data.Services.ControllerService;
 using MarketAssetPriceAPI.Data.Services.DbService;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Options;
@@ -16,7 +13,7 @@ using System.Net.Http.Headers;
 using System.Text;
 using System.Web;
 
-namespace MarketAssetPriceAPI.Data.Services
+namespace MarketAssetPriceAPI.Data.Services.ControllerService
 {
     public class InstrumentControllerService(IInstrumentService instrumentService, HttpClient httpClient, ITokenControllerService tokenService, IOptions<FintachartCredentials> credentials) : AuthorizedControllerService(tokenService), IInstrumentControllerService
     {

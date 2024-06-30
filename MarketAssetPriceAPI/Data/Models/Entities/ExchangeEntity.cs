@@ -1,5 +1,4 @@
-﻿using MarketAssetPriceAPI.Data.Models.DTOs;
-
+﻿
 namespace MarketAssetPriceAPI.Data.Models.Entities
 {
     public class ExchangeEntity

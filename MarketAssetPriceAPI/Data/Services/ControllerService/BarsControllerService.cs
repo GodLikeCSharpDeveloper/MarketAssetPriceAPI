@@ -3,7 +3,6 @@ using Newtonsoft.Json;
 using System.Net;
 using System.Text;
 using Microsoft.AspNetCore.Http;
-using MarketAssetPriceAPI.Data.Services;
 using System.Web;
 using MarketAssetPriceAPI.Data.Models.ApiProviderModels.ConnectionModels;
 using MarketAssetPriceAPI.Data.Models.ApiProviderModels.Bars.CountBack;

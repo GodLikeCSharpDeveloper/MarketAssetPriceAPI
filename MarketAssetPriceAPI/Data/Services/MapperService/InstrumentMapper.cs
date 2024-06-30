@@ -1,6 +1,6 @@
 ﻿using AutoMapper;
 using MarketAssetPriceAPI.Data.Models.ApiProviderModels.Instruments;
-using MarketAssetPriceAPI.Data.Models.DTOs;
+using MarketAssetPriceAPI.Data.Models.Entities;
 
 namespace MarketAssetPriceAPI.Data.Services.MapperService
 {

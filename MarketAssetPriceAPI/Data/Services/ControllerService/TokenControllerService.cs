@@ -1,11 +1,10 @@
 ﻿using MarketAssetPriceAPI.Data.Extensions.Tokens;
 using MarketAssetPriceAPI.Data.Models.ApiProviderModels.ConnectionModels;
-using MarketAssetPriceAPI.Data.Services.ControllerService;
 using Microsoft.Extensions.Options;
 using Newtonsoft.Json;
 using System.Net.Http;
 
-namespace MarketAssetPriceAPI.Data.Services
+namespace MarketAssetPriceAPI.Data.Services.ControllerService
 {
     public class TokenControllerService(IHttpClientFactory httpClientFactory,
         IOptions<FintachartCredentials> credentials,

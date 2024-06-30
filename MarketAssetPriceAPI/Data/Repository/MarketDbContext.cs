@@ -1,5 +1,4 @@
-﻿using MarketAssetPriceAPI.Data.Models.DTOs;
-using MarketAssetPriceAPI.Data.Models.Entities;
+﻿using MarketAssetPriceAPI.Data.Models.Entities;
 using Microsoft.EntityFrameworkCore;
 
 namespace MarketAssetPriceAPI.Data.Repository
@@ -13,33 +12,35 @@ namespace MarketAssetPriceAPI.Data.Repository
         public DbSet<InstrumentProviderRelationEntity> InstrumentProviderRelations { get; set; }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<InstrumentProviderRelationEntity>()
-                .HasIndex(ip => new { ip.ProviderId, ip.InstrumentId })
-                .IsUnique();
-            modelBuilder.Entity<InstrumentProviderRelationEntity>()
-               .HasOne<ProviderEntity>()
-               .WithMany()
-               .HasForeignKey(ip => ip.ProviderId)
-               .OnDelete(DeleteBehavior.Cascade);
-            modelBuilder.Entity<InstrumentProviderRelationEntity>()
-                .HasOne<InstrumentEntity>()
-                .WithMany()
-                .HasForeignKey(ip => ip.InstrumentId)
-                .OnDelete(DeleteBehavior.Cascade);
-            modelBuilder.Entity<InstrumentProviderRelationEntity>()
-                .HasKey(ip => new { ip.ProviderId, ip.InstrumentId });
-            modelBuilder.Entity<InstrumentEntity>()
-                .HasMany<ProviderEntity>()
-                .WithMany()
-                .UsingEntity<InstrumentProviderRelationEntity>(j => j.ToTable("InstrumentProviders"));
-            modelBuilder.Entity<InstrumentProviderRelationEntity>()
-                .HasOne<ProviderEntity>()
-                .WithMany()
+            base.OnModelCreating(modelBuilder);
+
+            modelBuilder.Entity<InstrumentProviderRelationEntity>(entity =>
+            {
+                entity.HasKey(e => e.Id);
+                entity.Property(e => e.Id).ValueGeneratedOnAdd();
+                entity.HasIndex(ip => new { ip.ProviderId, ip.InstrumentId }).IsUnique();
+
+                entity.HasOne(ip => ip.Provider)
+                      .WithMany()
+                      .HasForeignKey(ip => ip.ProviderId)
+                      .OnDelete(DeleteBehavior.Cascade);
+
+                entity.HasOne(ip => ip.Instrument)
+                      .WithMany()
+                      .HasForeignKey(ip => ip.InstrumentId)
+                      .OnDelete(DeleteBehavior.Cascade);
+            });
+
+            modelBuilder.Entity<ProviderEntity>()
+                .HasMany<InstrumentProviderRelationEntity>()
+                .WithOne(ip => ip.Provider)
                 .HasForeignKey(ip => ip.ProviderId)
                 .OnDelete(DeleteBehavior.Cascade);
-            modelBuilder.Entity<ExchangeEntity>()
-                .HasOne<ProviderEntity>()
-                .WithMany()
+
+            modelBuilder.Entity<InstrumentEntity>()
+                .HasMany<InstrumentProviderRelationEntity>()
+                .WithOne(ip => ip.Instrument)
+                .HasForeignKey(ip => ip.InstrumentId)
                 .OnDelete(DeleteBehavior.Cascade);
         }
     }

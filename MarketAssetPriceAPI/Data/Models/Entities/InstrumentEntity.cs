@@ -1,7 +1,7 @@
 ﻿using MarketAssetPriceAPI.Data.Models.ApiProviderModels.Instruments;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace MarketAssetPriceAPI.Data.Models.DTOs
+namespace MarketAssetPriceAPI.Data.Models.Entities
 {
     public class InstrumentEntity
     {

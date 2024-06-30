@@ -17,7 +17,22 @@ namespace MarketAssetPriceAPI.Migrations
 #pragma warning disable 612, 618
             modelBuilder.HasAnnotation("ProductVersion", "8.0.6");
 
-            modelBuilder.Entity("MarketAssetPriceAPI.Data.Models.DTOs.InstrumentEntity", b =>
+            modelBuilder.Entity("MarketAssetPriceAPI.Data.Models.Entities.ExchangeEntity", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("INTEGER");
+
+                    b.Property<string>("ExchangeName")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Exchanges");
+                });
+
+            modelBuilder.Entity("MarketAssetPriceAPI.Data.Models.Entities.InstrumentEntity", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -49,28 +64,29 @@ namespace MarketAssetPriceAPI.Migrations
                     b.ToTable("Instruments");
                 });
 
-            modelBuilder.Entity("MarketAssetPriceAPI.Data.Models.DTOs.InstrumentProviderRelationEntity", b =>
+            modelBuilder.Entity("MarketAssetPriceAPI.Data.Models.Entities.InstrumentProviderRelationEntity", b =>
                 {
-                    b.Property<int>("ProviderId")
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER");
 
                     b.Property<int>("InstrumentId")
                         .HasColumnType("INTEGER");
 
-                    b.Property<int>("Id")
+                    b.Property<int>("ProviderId")
                         .HasColumnType("INTEGER");
 
-                    b.HasKey("ProviderId", "InstrumentId");
+                    b.HasKey("Id");
 
                     b.HasIndex("InstrumentId");
 
                     b.HasIndex("ProviderId", "InstrumentId")
                         .IsUnique();
 
-                    b.ToTable("InstrumentProviders", (string)null);
+                    b.ToTable("InstrumentProviderRelations");
                 });
 
-            modelBuilder.Entity("MarketAssetPriceAPI.Data.Models.DTOs.ProviderEntity", b =>
+            modelBuilder.Entity("MarketAssetPriceAPI.Data.Models.Entities.ProviderEntity", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -93,47 +109,23 @@ namespace MarketAssetPriceAPI.Migrations
                     b.ToTable("Providers");
                 });
 
-            modelBuilder.Entity("MarketAssetPriceAPI.Data.Models.Entities.ExchangeEntity", b =>
+            modelBuilder.Entity("MarketAssetPriceAPI.Data.Models.Entities.InstrumentProviderRelationEntity", b =>
                 {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("INTEGER");
-
-                    b.Property<string>("ExchangeName")
-                        .IsRequired()
-                        .HasColumnType("TEXT");
-
-                    b.Property<int?>("ProviderId")
-                        .HasColumnType("INTEGER");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("ProviderId");
-
-                    b.ToTable("Exchanges");
-                });
-
-            modelBuilder.Entity("MarketAssetPriceAPI.Data.Models.DTOs.InstrumentProviderRelationEntity", b =>
-                {
-                    b.HasOne("MarketAssetPriceAPI.Data.Models.DTOs.InstrumentEntity", null)
+                    b.HasOne("MarketAssetPriceAPI.Data.Models.Entities.InstrumentEntity", "Instrument")
                         .WithMany()
                         .HasForeignKey("InstrumentId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("MarketAssetPriceAPI.Data.Models.DTOs.ProviderEntity", null)
+                    b.HasOne("MarketAssetPriceAPI.Data.Models.Entities.ProviderEntity", "Provider")
                         .WithMany()
                         .HasForeignKey("ProviderId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-                });
 
-            modelBuilder.Entity("MarketAssetPriceAPI.Data.Models.Entities.ExchangeEntity", b =>
-                {
-                    b.HasOne("MarketAssetPriceAPI.Data.Models.DTOs.ProviderEntity", null)
-                        .WithMany()
-                        .HasForeignKey("ProviderId")
-                        .OnDelete(DeleteBehavior.Cascade);
+                    b.Navigation("Instrument");
+
+                    b.Navigation("Provider");
                 });
 #pragma warning restore 612, 618
         }

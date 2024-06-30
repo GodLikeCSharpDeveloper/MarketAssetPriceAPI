@@ -28,11 +28,27 @@ namespace MarketAssetPriceApiTest
         }
 
         [Test]
-        public async Task GetBarsCountBack_ReturnsBadRequestResult_WithExpectedData()
+        public async Task GetAllInstruments_ReturnsBadRequestResult_WhenDataIsNull()
         {
             // Arrange
             var parameters = new InstrumentQueryParameters { };
-            var expectedData = new InstrumentsResponse {  };
+            InstrumentsResponse expectedData = null;
+            _mockInstrumentService.Setup(s => s.GetInstruments(It.IsAny<InstrumentQueryParameters>())).Returns(Task.FromResult<InstrumentsResponse>(null));
+
+            // Act
+            var result = await _controller.GetAllInstruments(parameters) as BadRequestObjectResult;
+
+            // Assert
+            Assert.That(result, Is.Not.Null);
+            Assert.That(result.StatusCode, Is.EqualTo(400));
+            Assert.That(result.Value, Is.EqualTo(expectedData));
+        }
+        [Test]
+        public async Task GetAllInstruments_ReturnsOkRequestResult_WhenDataIsNotNull()
+        {
+            // Arrange
+            var parameters = new InstrumentQueryParameters { };
+            var expectedData = new InstrumentsResponse { };
             _mockInstrumentService.Setup(s => s.GetInstruments(It.IsAny<InstrumentQueryParameters>())).Returns(Task.FromResult(expectedData));
 
             // Act
@@ -43,9 +59,8 @@ namespace MarketAssetPriceApiTest
             Assert.That(result.StatusCode, Is.EqualTo(200));
             Assert.That(result.Value, Is.EqualTo(expectedData));
         }
-
         [Test]
-        public async Task GetBarsDateRange_ReturnsOkResult_WithExpectedData()
+        public async Task GetAllExchanges_ReturnsOkResult_WhenDataInNotNull()
         {
             // Arrange
             var parameters = new ExchangesQueryParameters { };
@@ -60,9 +75,24 @@ namespace MarketAssetPriceApiTest
             Assert.That(result.StatusCode, Is.EqualTo(200));
             Assert.That(result.Value, Is.EqualTo(expectedData));
         }
-
         [Test]
-        public async Task GetBarsTimeBack_ReturnsOkResult_WithExpectedData()
+        public async Task GetAllExchanges_ReturnsBadRequestResult_WhenDataIsNull()
+        {
+            // Arrange
+            var parameters = new ExchangesQueryParameters { };
+            ExchangeResponse expectedData = null;
+            _mockInstrumentService.Setup(s => s.GetExchanges(parameters)).Returns(Task.FromResult<ExchangeResponse>(null));
+
+            // Act
+            var result = await _controller.GetAllExchanges(parameters) as BadRequestObjectResult;
+
+            // Assert
+            Assert.That(result, Is.Not.Null);
+            Assert.That(result.StatusCode, Is.EqualTo(400));
+            Assert.That(result.Value, Is.EqualTo(expectedData));
+        }
+        [Test]
+        public async Task GetAllProviders_ReturnsOkResult_WhenDataIsNotNull()
         {
             // Arrange
             var expectedData = new Providers { };
@@ -74,6 +104,21 @@ namespace MarketAssetPriceApiTest
             // Assert
             Assert.That(result, Is.Not.Null);
             Assert.That(result.StatusCode, Is.EqualTo(200));
+            Assert.That(result.Value, Is.EqualTo(expectedData));
+        }
+        [Test]
+        public async Task GetAllProviders_ReturnsBadRequestResult_WhenDataIsNull()
+        {
+            // Arrange
+            Providers expectedData = null;
+            _mockInstrumentService.Setup(s => s.GetProviders()).Returns(Task.FromResult(expectedData));
+
+            // Act
+            var result = await _controller.GetAllProviders() as BadRequestObjectResult;
+
+            // Assert
+            Assert.That(result, Is.Not.Null);
+            Assert.That(result.StatusCode, Is.EqualTo(400));
             Assert.That(result.Value, Is.EqualTo(expectedData));
         }
     }

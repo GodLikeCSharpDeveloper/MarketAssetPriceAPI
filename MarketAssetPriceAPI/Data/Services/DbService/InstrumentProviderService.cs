@@ -1,4 +1,4 @@
-﻿using MarketAssetPriceAPI.Data.Models.DTOs;
+﻿using MarketAssetPriceAPI.Data.Models.Entities;
 using MarketAssetPriceAPI.Data.Repository;
 
 namespace MarketAssetPriceAPI.Data.Services.DbService

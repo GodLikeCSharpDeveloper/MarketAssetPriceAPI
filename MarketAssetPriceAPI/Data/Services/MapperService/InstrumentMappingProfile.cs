@@ -1,6 +1,6 @@
 ﻿using AutoMapper;
 using MarketAssetPriceAPI.Data.Models.ApiProviderModels.Instruments;
-using MarketAssetPriceAPI.Data.Models.DTOs;
+using MarketAssetPriceAPI.Data.Models.Entities;
 using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace MarketAssetPriceAPI.Data.Services.MapperService
