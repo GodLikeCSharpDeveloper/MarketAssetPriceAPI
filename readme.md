@@ -1,27 +1,58 @@
 # Project Name
+# Market Asset Price API
 
-## Overview
-
-This project provides an API service to get price information for specific market assets such as EUR/USD, GOOG, etc. The service is implemented as a REST API using .NET Core and follows best practices for API design. The data is stored in a SQLite database and the application runs in a Docker container.
-
-## Prerequisites
-
-- Docker
-- .NET Core SDK
+This project includes various APIs to fetch and update market asset data, including instruments, providers, exchanges, and bars. It also provides WebSocket functionality to stream data and displays it on the console as it appears. All data is saved into an SQLite database in the root of the project.
 
 ## Running the Application
 
-### 1. Ensure Configuration
+When you run the application from Visual Studio, Swagger UI will automatically appear, providing an interface to interact with and test the API endpoints.
 
-Verify that your configuration files, such as `appsettings.json`, are properly set up with the necessary connection strings and API keys.
+## Key Endpoints
 
-### 2. Docker Commands
+### Instrument Controller
 
-Navigate to the project root directory, where the Dockerfile and docker-compose.yml are located.
+#### GET /api/Instrument/list-instruments
 
-#### Build and Run Containers
+**Description**: Fetches all instrument data from an external API and updates the local database.
 
-Use the following command to build and run your Docker containers:
+#### GET /api/Instrument/list-providers
 
-```bash
-docker-compose up --build
+**Description**: Retrieves all providers from the local database.
+
+#### GET /api/Instrument/list-exchanges
+
+**Description**: Retrieves all exchanges from the local database.
+
+### WebSocket Controller
+
+#### GET /api/WebSocket/start
+
+**Description**: Starts streaming data through WebSocket and displays it on the console.
+
+#### POST /api/WebSocket/stop
+
+**Description**: Stops streaming data through WebSocket.
+
+### Bars Controller
+
+#### GET /api/Bars/list-bars
+
+**Description**: Retrieves bar data based on count back parameters.
+
+#### GET /api/Bars/date-range
+
+**Description**: Retrieves bar data based on date range parameters.
+
+#### GET /api/Bars/time-back
+
+**Description**: Retrieves bar data based on time back parameters.
+
+## Database
+
+All data fetched and updated by the API is saved into an SQLite database located in the root of the project. Ensure the database file exists and is correctly configured in the project settings.
+
+## How to Use
+
+1. **Run the application from Visual Studio**: This will launch the app and open Swagger UI in your default browser.
+2. **Navigate to the desired API endpoint** in Swagger UI.
+3. **Execute the endpoint** to interact with the API and observe the WebSocket output on the console.
