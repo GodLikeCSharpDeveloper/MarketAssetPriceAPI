@@ -6,6 +6,7 @@ namespace MarketAssetPriceAPI.Data.Services.DbService
     public interface IProviderService
     {
         public Task<ProviderEntity> AddNewProvider(ProviderEntity provider);
+        public Task<ProviderEntity> AddOrGetNewProvider(ProviderEntity provider);
         public Task<List<ProviderEntity>> AddNewProviders(List<ProviderEntity> providerValues);
     }
 }

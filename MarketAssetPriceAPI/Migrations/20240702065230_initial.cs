@@ -58,6 +58,11 @@ namespace MarketAssetPriceAPI.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Providers", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Providers_Exchanges_ExchangeId",
+                        column: x => x.ExchangeId,
+                        principalTable: "Exchanges",
+                        principalColumn: "Id");
                 });
 
             migrationBuilder.CreateTable(
@@ -92,18 +97,19 @@ namespace MarketAssetPriceAPI.Migrations
                 column: "InstrumentId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_InstrumentProviderRelations_ProviderId_InstrumentId",
+                name: "IX_InstrumentProviderRelations_ProviderId",
                 table: "InstrumentProviderRelations",
-                columns: new[] { "ProviderId", "InstrumentId" },
-                unique: true);
+                column: "ProviderId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Providers_ExchangeId",
+                table: "Providers",
+                column: "ExchangeId");
         }
 
         /// <inheritdoc />
         protected override void Down(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.DropTable(
-                name: "Exchanges");
-
             migrationBuilder.DropTable(
                 name: "InstrumentProviderRelations");
 
@@ -112,6 +118,9 @@ namespace MarketAssetPriceAPI.Migrations
 
             migrationBuilder.DropTable(
                 name: "Providers");
+
+            migrationBuilder.DropTable(
+                name: "Exchanges");
         }
     }
 }

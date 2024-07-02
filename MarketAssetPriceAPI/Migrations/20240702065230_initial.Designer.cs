@@ -11,7 +11,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace MarketAssetPriceAPI.Migrations
 {
     [DbContext(typeof(MarketDbContext))]
-    [Migration("20240630171343_initial")]
+    [Migration("20240702065230_initial")]
     partial class initial
     {
         /// <inheritdoc />
@@ -86,8 +86,7 @@ namespace MarketAssetPriceAPI.Migrations
 
                     b.HasIndex("InstrumentId");
 
-                    b.HasIndex("ProviderId", "InstrumentId")
-                        .IsUnique();
+                    b.HasIndex("ProviderId");
 
                     b.ToTable("InstrumentProviderRelations");
                 });
@@ -112,19 +111,21 @@ namespace MarketAssetPriceAPI.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("ExchangeId");
+
                     b.ToTable("Providers");
                 });
 
             modelBuilder.Entity("MarketAssetPriceAPI.Data.Models.Entities.InstrumentProviderRelationEntity", b =>
                 {
                     b.HasOne("MarketAssetPriceAPI.Data.Models.Entities.InstrumentEntity", "Instrument")
-                        .WithMany()
+                        .WithMany("InstrumentProviderRelations")
                         .HasForeignKey("InstrumentId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("MarketAssetPriceAPI.Data.Models.Entities.ProviderEntity", "Provider")
-                        .WithMany()
+                        .WithMany("InstrumentProviderRelations")
                         .HasForeignKey("ProviderId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -132,6 +133,25 @@ namespace MarketAssetPriceAPI.Migrations
                     b.Navigation("Instrument");
 
                     b.Navigation("Provider");
+                });
+
+            modelBuilder.Entity("MarketAssetPriceAPI.Data.Models.Entities.ProviderEntity", b =>
+                {
+                    b.HasOne("MarketAssetPriceAPI.Data.Models.Entities.ExchangeEntity", "Exchange")
+                        .WithMany()
+                        .HasForeignKey("ExchangeId");
+
+                    b.Navigation("Exchange");
+                });
+
+            modelBuilder.Entity("MarketAssetPriceAPI.Data.Models.Entities.InstrumentEntity", b =>
+                {
+                    b.Navigation("InstrumentProviderRelations");
+                });
+
+            modelBuilder.Entity("MarketAssetPriceAPI.Data.Models.Entities.ProviderEntity", b =>
+                {
+                    b.Navigation("InstrumentProviderRelations");
                 });
 #pragma warning restore 612, 618
         }

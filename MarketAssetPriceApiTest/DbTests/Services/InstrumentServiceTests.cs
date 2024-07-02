@@ -63,7 +63,6 @@ namespace MarketAssetPriceApiTest
             // Assert
             _mockInstrumentRepository.Verify(r => r.AddNewInstrument(It.Is<InstrumentEntity>(ie => ie.ApiProviderId == "Instrument1")), Times.Once);
             _mockProviderService.Verify(s => s.AddNewProviders(It.IsAny<List<ProviderEntity>>()), Times.Once);
-            _mockInstrumentProviderService.Verify(s => s.AddNewInstrumentProviders(It.IsAny<List<InstrumentProviderRelationEntity>>()), Times.Once);
         }
 
         [Test]
@@ -75,7 +74,7 @@ namespace MarketAssetPriceApiTest
                 new()
                 {
                     ApiProviderId = "Instrument1",
-                    Mappings = new Dictionary<string, Mapping> 
+                    Mappings = new Dictionary<string, Mapping>
                     {
                         {
                             "test", new Mapping { Symbol = "symbol", DefaultOrderSize = 1, Exchange = "Exchange1" }
@@ -130,7 +129,6 @@ namespace MarketAssetPriceApiTest
             // Assert
             _mockInstrumentRepository.Verify(r => r.AddNewInstruments(It.IsAny<List<InstrumentEntity>>()), Times.Once);
             _mockProviderService.Verify(s => s.AddNewProviders(It.IsAny<List<ProviderEntity>>()), Times.Exactly(instruments.Count));
-            _mockInstrumentProviderService.Verify(s => s.AddNewInstrumentProviders(It.IsAny<List<InstrumentProviderRelationEntity>>()), Times.Exactly(instruments.Count));
         }
         [Test]
         public async Task AddOrUpdateNewInstruments_AddsAndUpdatesInstruments()
@@ -169,7 +167,6 @@ namespace MarketAssetPriceApiTest
             _mockInstrumentRepository.Verify(repo => repo.GetInstrumentsByApiProviderIds(It.IsAny<List<string>>()), Times.Once);
             _mockInstrumentRepository.Verify(repo => repo.AddNewInstruments(It.IsAny<List<InstrumentEntity>>()), Times.Once);
             _mockInstrumentRepository.Verify(repo => repo.UpdateInstruments(It.IsAny<List<InstrumentEntity>>()), Times.Once);
-            _mockInstrumentProviderService.Verify(service => service.UpdateInstrumentProvidersRelations(It.IsAny<List<InstrumentProviderRelationEntity>>()), Times.Once);
         }
 
         [Test]
@@ -196,7 +193,6 @@ namespace MarketAssetPriceApiTest
 
             // Assert
             _mockInstrumentRepository.Verify(repo => repo.UpdateInstruments(It.IsAny<List<InstrumentEntity>>()), Times.Once);
-            _mockInstrumentProviderService.Verify(service => service.UpdateInstrumentProvidersRelations(It.IsAny<List<InstrumentProviderRelationEntity>>()), Times.Once);
         }
     }
 

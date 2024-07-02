@@ -42,7 +42,7 @@ namespace MarketAssetPriceApiTest.Controller.Mapper
                 Assert.That(instrument.Description, Is.EqualTo(result.Description));
                 Assert.That(instrument.Symbol, Is.EqualTo(result.Symbol));
                 Assert.That(instrument.TickSize, Is.EqualTo(result.TickSize));
-                Assert.That(instrument.Mappings.FirstOrDefault().Value.Exchange, Is.EqualTo(result.Providers.FirstOrDefault().Exchange));
+                Assert.That(instrument.Mappings.FirstOrDefault().Value.Exchange, Is.EqualTo(result.Providers.FirstOrDefault().Exchange.ExchangeName));
                 Assert.That(instrument.Mappings.FirstOrDefault().Value.Symbol, Is.EqualTo(result.Providers.FirstOrDefault().Symbol));
                 Assert.That(instrument.Mappings.FirstOrDefault().Value.DefaultOrderSize, Is.EqualTo(result.Providers.FirstOrDefault().DefaultOrderSize));
             });
@@ -61,7 +61,7 @@ namespace MarketAssetPriceApiTest.Controller.Mapper
                 // Assert
                 Assert.That(result, Is.Not.Null);
                 Assert.That(instrument.Key, Is.EqualTo(result.ProviderName));
-                Assert.That(instrument.Value.Exchange, Is.EqualTo(result.Exchange));
+                Assert.That(instrument.Value.Exchange, Is.EqualTo(result.Exchange.ExchangeName));
                 Assert.That(instrument.Value.DefaultOrderSize, Is.EqualTo(result.DefaultOrderSize));
                 Assert.That(instrument.Value.Symbol, Is.EqualTo(result.Symbol));
             });

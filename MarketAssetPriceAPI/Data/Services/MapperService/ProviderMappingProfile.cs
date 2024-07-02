@@ -8,10 +8,19 @@ namespace MarketAssetPriceAPI.Data.Services.MapperService
     {
         public ProviderMappingProfile()
         {
-            CreateMap<KeyValuePair<string, Mapping>, ProviderEntity>().ForMember(dest=> dest.ProviderName, opt=>opt.MapFrom(src=>src.Key)).
-                ForMember(dest=>dest.Exchange, opt=>opt.MapFrom(src=>src.Value.Exchange)).
-                ForMember(dest => dest.Symbol, opt => opt.MapFrom(src => src.Value.Symbol)).
-                ForMember(dest => dest.DefaultOrderSize, opt => opt.MapFrom(src => src.Value.DefaultOrderSize));
+            CreateMap<KeyValuePair<string, Mapping>, ProviderEntity>()
+                .ForMember(dest => dest.ProviderName, opt => opt.MapFrom(src => src.Key))
+                .ForMember(dest => dest.Symbol, opt => opt.MapFrom(src => src.Value.Symbol))
+                .ForMember(dest => dest.DefaultOrderSize, opt => opt.MapFrom(src => src.Value.DefaultOrderSize))
+                .AfterMap((src, dest) =>
+                {
+                    if (dest.Exchange == null)
+                    {
+                        dest.Exchange = new ExchangeEntity();
+                    }
+                    dest.Exchange.ExchangeName = src.Value.Exchange;
+                });
         }
+
     }
 }

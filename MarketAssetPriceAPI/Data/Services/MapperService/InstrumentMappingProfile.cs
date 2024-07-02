@@ -21,7 +21,7 @@ namespace MarketAssetPriceAPI.Data.Services.MapperService
             .ForMember(dest => dest.Providers, opt => opt.MapFrom(src => src.Mappings != null ? src.Mappings.Select(m => new ProviderEntity
             {
                 DefaultOrderSize = m.Value.DefaultOrderSize,
-                Exchange = m.Value.Exchange,
+                Exchange = new ExchangeEntity() { ExchangeName = m.Value.Exchange },
                 Symbol = m.Value.Symbol,
                 ProviderName = m.Key
             }).ToList() : new List<ProviderEntity>()));

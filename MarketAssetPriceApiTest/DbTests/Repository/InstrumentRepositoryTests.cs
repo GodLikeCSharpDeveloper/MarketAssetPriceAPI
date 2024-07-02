@@ -37,7 +37,7 @@ namespace MarketAssetPriceApiTest
                 BaseCurrency = "USD",
                 Currency = "USD",
                 Description = "testDescription",
-                Kind = "testKind"
+                Kind = "testKind",
             };
             var expectedData = new InstrumentEntity
             {

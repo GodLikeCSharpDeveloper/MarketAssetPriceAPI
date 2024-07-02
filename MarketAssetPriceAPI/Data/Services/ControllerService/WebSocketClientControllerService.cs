@@ -27,34 +27,49 @@ namespace MarketAssetPriceAPI.Data.Services.ControllerService
         }
         public async Task Start()
         {
-            if (_cancellationTokenSource.IsCancellationRequested)
+            try
             {
-                InitializeCancellationTokenSource();
+                if (_cancellationTokenSource.IsCancellationRequested)
+                    InitializeCancellationTokenSource();
+                var token = tokenService.GetAccessToken().Result;
+                _webSocketUri = new Uri($"wss://platform.fintacharts.com/api/streaming/ws/v1/realtime?token={token}");
+                await _clientWebSocket.ConnectAsync(_webSocketUri, CancellationToken.None);
+                Console.WriteLine("WebSocket connection started.");
+                _ = Task.Run(ReceiveData);
             }
-            var token = tokenService.GetAccessToken().Result;
-            _webSocketUri = new Uri($"wss://platform.fintacharts.com/api/streaming/ws/v1/realtime?token={token}");
-            await _clientWebSocket.ConnectAsync(_webSocketUri, CancellationToken.None);
-            Console.WriteLine("WebSocket connection started.");
-            _ = Task.Run(ReceiveData);
+            catch (Exception ex)
+            {
+                await Stop();
+                Console.WriteLine($"Error: {ex.Message}");
+            }
         }
 
         public async Task SendSubscription()
         {
-            var subscription = new
+            try
             {
-                type = "l1-subscription",
-                id = "1",
-                instrumentId = "ad9e5345-4c3b-41fc-9437-1d253f62db52",
-                provider = "simulation",
-                subscribe = true,
-                kinds = new[] { "ask", "bid", "last" }
-            };
+                var subscription = new
+                {
+                    type = "l1-subscription",
+                    id = "1",
+                    instrumentId = "ad9e5345-4c3b-41fc-9437-1d253f62db52",
+                    provider = "simulation",
+                    subscribe = true,
+                    kinds = new[] { "ask", "bid", "last" }
+                };
 
-            var message = JsonSerializer.Serialize(subscription);
-            var bytes = Encoding.UTF8.GetBytes(message);
+                var message = JsonSerializer.Serialize(subscription);
+                var bytes = Encoding.UTF8.GetBytes(message);
 
-            await _clientWebSocket.SendAsync(new ArraySegment<byte>(bytes), WebSocketMessageType.Text, true, CancellationToken.None);
-            Console.WriteLine("Subscription message sent.");
+                await _clientWebSocket.SendAsync(new ArraySegment<byte>(bytes), WebSocketMessageType.Text, true, CancellationToken.None);
+                Console.WriteLine("Subscription message sent.");
+            }
+            catch (Exception ex)
+            {
+                await Stop();
+                Console.WriteLine($"Error: {ex.Message}");
+            }
+
         }
 
         private async Task ReceiveData()
@@ -72,6 +87,7 @@ namespace MarketAssetPriceAPI.Data.Services.ControllerService
             }
             catch (Exception ex)
             {
+                await Stop();
                 Console.WriteLine($"Error: {ex.Message}");
             }
 

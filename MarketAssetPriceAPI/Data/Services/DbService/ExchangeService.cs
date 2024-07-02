@@ -8,19 +8,45 @@ namespace MarketAssetPriceAPI.Data.Services.DbService
         private readonly IExchangeRepository exchangeRepository = exchangeRepository;
         public async Task<ExchangeEntity> GetOrAddExchangeEntity(ExchangeEntity exchangeEntity)
         {
-            var existingEntity = await GetExchangeEntityByName(exchangeEntity.ExchangeName);
-            if (existingEntity == null && !string.IsNullOrEmpty(exchangeEntity.ExchangeName))
-                return await AddExchangeAsync(exchangeEntity);
-            return exchangeEntity;
+            try
+            {
+                var existingEntity = await GetExchangeEntityByName(exchangeEntity.ExchangeName);
+                if (existingEntity == null && !string.IsNullOrEmpty(exchangeEntity.ExchangeName))
+                    return await AddExchangeAsync(exchangeEntity);
+                return existingEntity;
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+                return null;
+            }
+
         }
         public async Task<ExchangeEntity> GetExchangeEntityByName(string exchangeName)
         {
-            var existingEntity = await exchangeRepository.GetEchangeAsync(exchangeName);
-            return existingEntity;
+            try
+            {
+                var existingEntity = await exchangeRepository.GetEchangeAsync(exchangeName);
+                return existingEntity;
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+                return null;
+            }
+
         }
         public async Task<ExchangeEntity> AddExchangeAsync(ExchangeEntity exchangeEntity)
         {
-            return await exchangeRepository.AddExchangeAsync(exchangeEntity);
+            try
+            {
+                return await exchangeRepository.AddExchangeAsync(exchangeEntity);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+                return null;
+            }
         }
     }
 }

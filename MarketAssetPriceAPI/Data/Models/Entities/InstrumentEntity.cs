@@ -14,6 +14,7 @@ namespace MarketAssetPriceAPI.Data.Models.Entities
         public string? Currency { get; set; }
         public string? BaseCurrency { get; set; }
         public DateTime LastUpdateTime { get; set; }
+        public List<InstrumentProviderRelationEntity> InstrumentProviderRelations { get; set; } = [];
         [NotMapped]
         public List<ProviderEntity> Providers { get; set; }
     }

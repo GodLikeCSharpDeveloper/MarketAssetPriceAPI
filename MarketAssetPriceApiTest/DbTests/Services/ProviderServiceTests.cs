@@ -14,13 +14,15 @@ namespace MarketAssetPriceApiTest
     public class ProviderServiceTests
     {
         private Mock<IProviderRepository> _mockProviderRepository;
+        private Mock<IExchangeService> _mockExchangeService;
         private ProviderService _ProviderService;
 
         [SetUp]
         public void Setup()
         {
             _mockProviderRepository = new Mock<IProviderRepository>();
-            _ProviderService = new ProviderService(_mockProviderRepository.Object);
+            _mockExchangeService = new Mock<IExchangeService>();
+            _ProviderService = new ProviderService(_mockProviderRepository.Object, _mockExchangeService.Object);
         }
 
         [Test]
@@ -35,7 +37,7 @@ namespace MarketAssetPriceApiTest
             var result = await _ProviderService.AddNewProvider(exchangeEntity);
 
             // Assert
-            Assert.That(exchangeEntity, Is.EqualTo(result));
+            Assert.That(exchangeEntity.ProviderName, Is.EqualTo(result.ProviderName));
         }
         [Test]
         public async Task AddExchangeListAsync_AddsEntity_ReturnsEntity()
@@ -49,7 +51,10 @@ namespace MarketAssetPriceApiTest
             var result = await _ProviderService.AddNewProviders(exchangeEntity);
 
             // Assert
-            Assert.That(exchangeEntity, Is.EqualTo(result));
+            exchangeEntity.ForEach(e => 
+            { 
+                Assert.That(result.Any(d => d.ProviderName == e.ProviderName), Is.True);
+            });
         }
     }
 }

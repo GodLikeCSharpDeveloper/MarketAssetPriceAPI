@@ -1,5 +1,6 @@
 ﻿using MarketAssetPriceAPI.Data.Models.Entities;
 using Microsoft.EntityFrameworkCore;
+using System.Diagnostics;
 
 
 namespace MarketAssetPriceAPI.Data.Repository
@@ -21,9 +22,9 @@ namespace MarketAssetPriceAPI.Data.Repository
         }
         public async Task<List<InstrumentEntity>> GetInstrumentsByApiProviderIds(List<string> apiProviderIds)
         {
-            return await marketDbContext.Instruments
-                .Where(i => apiProviderIds.Contains(i.ApiProviderId))
-                .ToListAsync();
+            var result = await marketDbContext.Instruments.Where(i => apiProviderIds.Contains(i.ApiProviderId)).Include(d=>d.Providers).ToListAsync();
+            return result;
+
         }
         public async Task<InstrumentEntity> UpdateInstrument(InstrumentEntity instrument)
         {
@@ -34,7 +35,7 @@ namespace MarketAssetPriceAPI.Data.Repository
         public async Task<List<InstrumentEntity>> UpdateInstruments(List<InstrumentEntity> instruments)
         {
             marketDbContext.UpdateRange(instruments);
-            await SaveChangesAsync();
+            await marketDbContext.SaveChangesAsync();
             return instruments;
         }
         public async Task SaveChangesAsync()

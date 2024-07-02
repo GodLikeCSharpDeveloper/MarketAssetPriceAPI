@@ -14,7 +14,7 @@ namespace MarketAssetPriceAPI.Data.Repository
         }
         public async Task<ExchangeEntity?> GetEchangeAsync(string exchangeName)
         {
-            return await marketDbContext.Exchanges.FirstOrDefaultAsync(d => d.ExchangeName == exchangeName);
+            return await marketDbContext.Exchanges.AsNoTracking().FirstOrDefaultAsync(d => d.ExchangeName == exchangeName);
         }
     }
 }

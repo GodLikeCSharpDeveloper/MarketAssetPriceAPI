@@ -33,14 +33,14 @@ namespace MarketAssetPriceApiTest
             var parameters = new ProviderEntity
             {
                 DefaultOrderSize = 10,
-                Exchange = "testExch",
+                Exchange = new ExchangeEntity() { ExchangeName = "testExch" },
                 ProviderName = "TestName",
                 Symbol = "TestSymbol",
             };
             var expectedData = new ProviderEntity
             {
                 DefaultOrderSize = 10,
-                Exchange = "testExch",
+                Exchange = new ExchangeEntity() { ExchangeName = "testExch" },
                 ProviderName = "TestName",
                 Symbol = "TestSymbol",
             };
@@ -54,7 +54,7 @@ namespace MarketAssetPriceApiTest
                 Assert.That(result, Is.Not.Null);
                 Assert.That(result.Id, Is.AtLeast(1));
                 Assert.That(result.DefaultOrderSize, Is.EqualTo(expectedData.DefaultOrderSize));
-                Assert.That(result.Exchange, Is.EqualTo(expectedData.Exchange));
+                Assert.That(result.Exchange.ExchangeName, Is.EqualTo(expectedData.Exchange.ExchangeName));
                 Assert.That(result.ProviderName, Is.EqualTo(expectedData.ProviderName));
                 Assert.That(result.Symbol, Is.EqualTo(expectedData.Symbol));
             });
@@ -67,14 +67,14 @@ namespace MarketAssetPriceApiTest
                 new()
                 {
                     DefaultOrderSize = 10,
-                    Exchange = "testExch",
+                    Exchange = new ExchangeEntity() { ExchangeName = "testExch" },
                     ProviderName = "TestName",
                     Symbol = "TestSymbol",
                 },
                 new()
                 {
                     DefaultOrderSize = 101,
-                    Exchange = "testExch2",
+                    Exchange = new ExchangeEntity() { ExchangeName = "testExch2" },
                     ProviderName = "TestName2",
                     Symbol = "TestSymbol2",
                 },
